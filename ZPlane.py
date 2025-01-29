@@ -174,9 +174,8 @@ class ZPlane(QWidget):
         self.plot_z_plane()
 
     def compute_filter_coefficients(self):
-        b = np.poly(self.zeros)
-        a = np.poly(self.poles)
-        return a,b
+        b,a = signal.zpk2tf(self.zeros, self.poles, 1)
+        return b,a
     
     def get_poles(self):
         return self.poles
