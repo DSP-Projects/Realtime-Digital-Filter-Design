@@ -1,10 +1,14 @@
 from PyQt5.QtWidgets import QMainWindow,QComboBox, QCheckBox, QRadioButton, QApplication, QPushButton, QLabel, QSlider,QProgressBar, QWidget
+from PyQt5.QtWidgets import QMainWindow,QComboBox, QCheckBox, QRadioButton, QApplication, QPushButton, QLabel, QSlider,QProgressBar,QGraphicsView,QGraphicsScene
 from PyQt5.QtGui import QIcon
 from pyqtgraph import PlotWidget
 import sys
 import os
 from PyQt5.uic import loadUi
 from ZPlane import ZPlane
+from RealTimeSignal import RealTimeFilter, RealTimePlot
+from Load import Load
+import pandas as pd
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -33,6 +37,7 @@ class MainWindow(QMainWindow):
         self.clear_button.clicked.connect(self.clear_plane)
         self.delete= self.findChild(QCheckBox, "delete_2")
         self.delete.clicked.connect(self.zplane.toggle_delete)
+        # self.clear_button.clicked.connect(self.clear)
 
         #swapping
         self.swap = self.findChild(QComboBox,"swapping")
@@ -64,6 +69,41 @@ class MainWindow(QMainWindow):
                 self.zplane.clear_poles()
             case 2:
                 self.zplane.clear_all()
+        self.original_plot=self.findChild(PlotWidget,"original_signal")
+        self.filtered_plot=self.findChild(PlotWidget,"filteredSignal")
+        self.graphics_view=self.findChild(QGraphicsView,"touch_pad")
+        self.graphics_view.setScene(QGraphicsScene())
+
+        self.load_radiobutton= self.findChild(QRadioButton,"loadSignal")
+        self.touch_button= self.findChild(QRadioButton,"touchPad")
+        self.load_pushbutton=self.findChild(QPushButton,"loadButton")
+        self.speed_slider=self.findChild(QSlider,"speedSlider")
+        self.load_pushbutton.clicked.connect(self.set_signal)
+        self.signal_data_time = []
+        self.signal_data_amplitude = []
+
+        self.load_signal= Load()
+        self.real_time_filter=RealTimeFilter()
+        self.real_time_plot=RealTimePlot(self.real_time_filter,self.original_plot,self.filtered_plot,self.graphics_view,self.signal_data_time,self.signal_data_amplitude)
+
+        self.speed_slider.valueChanged.connect(self.real_time_plot.update_timer)
+        self.touch_button.clicked.connect(self.set_touch_mode)
+        self.load_radiobutton.clicked.connect(self.set_load_mode)
+
+    def set_signal(self):
+        self.file_path=self.load_signal.browse_signals()
+        if self.file_path:
+            csvFile = pd.read_csv(self.file_path)   
+            self.signal_data_time = csvFile.iloc[:, 0].values
+            self.signal_data_amplitude = csvFile.iloc[:, 1].values
+
+    def set_touch_mode(self):
+        self.real_time_plot.mode="touch"
+    def set_load_mode(self):
+        self.real_time_plot.mode="load"    
+    
+    def zero_pole_placement(self):
+        pass
     
           
 
