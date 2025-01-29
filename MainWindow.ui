@@ -722,7 +722,7 @@ border-radius: 8px;</string>
                      <item>
                       <layout class="QHBoxLayout" name="horizontalLayout_4">
                        <item>
-                        <widget class="QComboBox" name="combo1_11">
+                        <widget class="QComboBox" name="clearCombo">
                          <property name="cursor">
                           <cursorShape>PointingHandCursor</cursorShape>
                          </property>
@@ -1033,7 +1033,7 @@ QPushButton:pressed {
                          </property>
                          <property name="icon">
                           <iconset>
-                           <normaloff>D:/3rd year, 1st semester/DSP/FilterDesign/icons/undo.png</normaloff>D:/3rd year, 1st semester/DSP/FilterDesign/icons/undo.png</iconset>
+                           <normaloff>icons/undo.png</normaloff>icons/undo.png</iconset>
                          </property>
                          <property name="iconSize">
                           <size>
@@ -1101,7 +1101,7 @@ QPushButton:pressed {
                          </property>
                          <property name="icon">
                           <iconset>
-                           <normaloff>D:/3rd year, 1st semester/DSP/FilterDesign/icons/redo.png</normaloff>D:/3rd year, 1st semester/DSP/FilterDesign/icons/redo.png</iconset>
+                           <normaloff>icons/redo.png</normaloff>icons/redo.png</iconset>
                          </property>
                          <property name="iconSize">
                           <size>
