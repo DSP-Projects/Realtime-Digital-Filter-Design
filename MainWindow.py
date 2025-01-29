@@ -81,9 +81,9 @@ class MainWindow(QMainWindow):
         self.load_pushbutton.clicked.connect(self.set_signal)
         self.signal_data_time = []
         self.signal_data_amplitude = []
-
+        self.b,self.a=self.zplane.compute_filter_coefficients
         self.load_signal= Load()
-        self.real_time_filter=RealTimeFilter()
+        self.real_time_filter=RealTimeFilter(self.a,self.b)
         self.real_time_plot=RealTimePlot(self.real_time_filter,self.original_plot,self.filtered_plot,self.graphics_view,self.signal_data_time,self.signal_data_amplitude)
 
         self.speed_slider.valueChanged.connect(self.real_time_plot.update_timer)
@@ -96,6 +96,7 @@ class MainWindow(QMainWindow):
             csvFile = pd.read_csv(self.file_path)   
             self.signal_data_time = csvFile.iloc[:, 0].values
             self.signal_data_amplitude = csvFile.iloc[:, 1].values
+            self.real_time_plot.add_signal(self.signal_data_amplitude)
 
     def set_touch_mode(self):
         self.real_time_plot.mode="touch"

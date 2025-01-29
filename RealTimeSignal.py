@@ -74,25 +74,39 @@ class RealTimePlot(QWidget):
         self.timer.setInterval(1000 // value)
 
     def update_plot(self):
-        if self.mode == "load" and self.counter < len(self.signal_amplitude):
-            x = self.signal_amplitude[self.counter]
-        elif self.mode == "touch" and self.counter < len(self.signal):
-            x = self.signal[self.counter]
-        else:
-            return  # No data to update
+        if self.mode == "load":
+            if self.counter < len(self.signal_time):
+                # Use the signal data directly in load mode
+                x = self.signal_amplitude[self.counter]  # Amplitude value
+                y = self.filter_instance.apply_filter(x)
 
-        y = self.filter_instance.apply_filter(x)
+                self.original_data.append(x)
+                self.filtered_data.append(y)
 
-        self.original_data.append(x)
-        self.filtered_data.append(y)
+                if len(self.original_data) > 500:
+                    self.original_data.pop(0)
+                    self.filtered_data.pop(0)
 
-        if len(self.original_data) > 500:
-            self.original_data.pop(0)
-            self.filtered_data.pop(0)
+                self.original_curve.setData(self.signal_time[:self.counter + 1], self.original_data)
+                self.filtered_curve.setData(self.signal_time[:self.counter + 1], self.filtered_data)
+                self.counter += 1
+        elif self.mode == "touch":
+            # Keep the existing logic for touch mode
+            if self.counter < len(self.signal):
+                x = self.signal[self.counter]
+                y = self.filter_instance.apply_filter(x)
 
-        self.original_curve.setData(self.original_data)
-        self.filtered_curve.setData(self.filtered_data)
-        self.counter += 1
+                self.original_data.append(x)
+                self.filtered_data.append(y)
+
+                if len(self.original_data) > 500:
+                    self.original_data.pop(0)
+                    self.filtered_data.pop(0)
+
+                self.original_curve.setData(self.original_data)
+                self.filtered_curve.setData(self.filtered_data)
+                self.counter += 1
+
 
 
     def add_signal(self, new_signal):
