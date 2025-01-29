@@ -1,4 +1,3 @@
-
 from PyQt5.QtWidgets import QMainWindow,QComboBox, QCheckBox, QRadioButton, QApplication, QPushButton, QLabel, QSlider,QProgressBar
 from PyQt5.QtGui import QIcon
 from pyqtgraph import PlotWidget
@@ -71,5 +70,4 @@ if __name__ == '__main__':
     window = MainWindow()
     window.show()
     # window.showMaximized()
-
-       
+    sys.exit(app.exec_())         
