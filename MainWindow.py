@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow,QComboBox, QCheckBox, QRadioButton, QApplication, QPushButton, QLabel, QSlider,QProgressBar
+from PyQt5.QtWidgets import QMainWindow,QComboBox, QCheckBox, QRadioButton, QApplication, QPushButton, QLabel, QSlider,QProgressBar, QWidget
 from PyQt5.QtGui import QIcon
 from pyqtgraph import PlotWidget
 import sys
@@ -13,11 +13,11 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Real-time Digital Filter Design")
 
         #z-plane
-        self.z_plane_widget = self.findChild(PlotWidget, "z_plane")
+        self.z_plane_widget = self.findChild(QWidget, "zplaneWidget")
         self.zplane= ZPlane(self.z_plane_widget)
         #filter design (fatma)
         
-        
+
         #zero-pole radiobuttons
         self.zero_radioButton = self.findChild(QRadioButton, "zeros")
         self.pole_radioButton = self.findChild(QRadioButton, "poles")
@@ -64,6 +64,7 @@ class MainWindow(QMainWindow):
                 self.zplane.clear_poles()
             case 2:
                 self.zplane.clear_all()
+    
           
 
 if __name__ == '__main__':

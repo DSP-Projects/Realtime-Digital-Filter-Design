@@ -24,10 +24,15 @@ class ZPlane(QWidget):
         # Matplotlib Figure and Canvas
         self.figure = Figure()
         self.canvas = FigureCanvas(self.figure)
-        layout = QVBoxLayout()
+        layout = QVBoxLayout(zplane_widget)
         layout.addWidget(self.canvas)
-        self.setLayout(layout)
+        zplane_widget.setLayout(layout)
+        # Create subplot
         self.ax = self.figure.add_subplot(111)
+        self.ax.set_aspect('equal')  # Keep axes square
+        self.ax.grid(True)
+        # Set tight layout for better fit
+        self.figure.tight_layout()
         
         self.plot_z_plane()
         #mouse connection
@@ -65,7 +70,6 @@ class ZPlane(QWidget):
         self.ax.set_title('Zeros and Poles in the Z-Plane')
         self.ax.set_xlabel('Real Part')
         self.ax.set_ylabel('Imaginary Part')
-        self.ax.axis('equal')
 
         if self.zeros.size > 0:
             self.ax.scatter(self.zeros.real, self.zeros.imag, s=50, color='red', label='Zeros', marker='o')
@@ -178,6 +182,10 @@ class ZPlane(QWidget):
         b,a = signal.zpk2tf(self.zeros, self.poles, 1)
         return b,a
     
+    def compute_zeros_poles_from_coefficients(self, b,a):
+       self.zeros, self.poles,_ =signal.tf2zpk(b,a)
+       self.plot_z_plane()
+    
     def get_poles(self):
         return self.poles
     
@@ -226,7 +234,7 @@ class ZPlane(QWidget):
         self.poles = np.array(poles, dtype=complex)
         self.plot_z_plane()
 
-    
+
 
 # if __name__ == '__main__':
 #     app = QApplication(sys.argv)
