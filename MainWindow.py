@@ -16,7 +16,8 @@ class MainWindow(QMainWindow):
         self.z_plane_widget = self.findChild(PlotWidget, "z_plane")
         self.zplane= ZPlane(self.z_plane_widget)
         #filter design (fatma)
-
+        
+        
         #zero-pole radiobuttons
         self.zero_radioButton = self.findChild(QRadioButton, "zeros")
         self.pole_radioButton = self.findChild(QRadioButton, "poles")
