@@ -1,9 +1,9 @@
 import numpy as np
 class CodeGenerator:
-    def __init__(self, b, a):
+    def __init__(self, z_plane_instance):
+        b, a= z_plane_instance.compute_filter_coefficients()
         self.b=b #numerator coefficients
         self.a=a #denominator coefficients
-        self.generate_c_code()
 
     def generate_c_code(self):
         b = self.b  # Numerator coefficients
