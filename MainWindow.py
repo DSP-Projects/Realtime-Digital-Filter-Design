@@ -30,7 +30,7 @@ class MainWindow(QMainWindow):
         self.clear_combobox = self.findChild(QComboBox,"clearCombo")
         self.clear_button = self.findChild(QPushButton,"clear")
         self.clear_button.clicked.connect(self.clear_plane)
-        self.delete= self.findChild(QCheckBox, "delete")
+        self.delete= self.findChild(QCheckBox, "delete_2")
         self.delete.clicked.connect(self.zplane.toggle_delete)
 
         #swapping
