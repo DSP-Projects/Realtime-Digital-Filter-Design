@@ -19,7 +19,7 @@ class MainWindow(QMainWindow):
         self.pole_radioButton = self.findChild(QRadioButton, "poles")
         self.zero_radioButton.setChecked(True)
         self.zero_radioButton.clicked.connect(self.zero_pole_placement)
-        self.pole_radioButton.clicked.connect(self.fun)
+        self.pole_radioButton.clicked.connect(self.zero_pole_placement)
         #conjugate check box
         self.conjugate_check = self.findChild(QCheckBox, "conjugateCheck")
         self.conjugate_check.clicked.connect(self.check_conjugate)
@@ -42,6 +42,7 @@ class MainWindow(QMainWindow):
 
         #magnitude plot
         self.magnitude_plot = self.findChild(PlotWidget, "Magnitude_graph")
+        
         #phase plot
         self.phase_plot = self.findChild(PlotWidget, "Phase_graph")
 
