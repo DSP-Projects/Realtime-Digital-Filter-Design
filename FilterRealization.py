@@ -3,13 +3,16 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout
 from PyQt5.QtGui import QPainter, QPen, QFont
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
+from scipy import signal
 
 class FilterDiagram:
     def __init__(self, b_coeffs, a_coeffs):
         self.b_coeffs = b_coeffs #numerator coefficients
         self.a_coeffs = a_coeffs #denominator coefficients
+        self.sos=signal.tf2sos(b, a) #sos: sections of second order for cascade. It returns Nx6 matrix, 
+                                     #each row corresponds to [b0, b1, b2, a0, a1, a2]
 
-    def draw(self, painter):
+    def draw_direct_form_2(self, painter, ):
         painter.setRenderHint(QPainter.Antialiasing)
 
         # Set pen and font
@@ -62,7 +65,57 @@ class FilterDiagram:
                 painter.drawLine(x_start+200, y_pos+10, x_start+200, y_pos+70)
             painter.drawLine(x_start+130, y_pos, x_start+190, y_pos)
 
+    def draw_cascade(self, painter):
+        painter.setRenderHint(QPainter.Antialiasing)
+        # Set Pen for drawing lines
+        pen = QPen(Qt.black, 2)
+        painter.setPen(pen)
+        # Input and output points
+        x_start, y_start = 250, 100
+        sections_num=len(self.sos)
+        spacing = 80  # Vertical spacing between blocks
+        sum_radius = 15  # Radius of summation nodes
+        rect_width, rect_height = 40, 40  # Delay block size
 
+        
+        for i in range(sections_num):
+            x_start += 300 
+            section= self.sos[i]
+            b, a = section[:3], section[4:]
+            
+            for i in range(len(a)):
+                y_pos = y_start + i * spacing
+
+                # Draw summation circle
+                painter.drawEllipse(x_start, y_pos - sum_radius, 2 * sum_radius, 2 * sum_radius)
+                if i<len(self.a_coeffs)-1:
+                    painter.drawLine(x_start+10, y_pos+10, x_start+10, y_pos+70)
+                painter.drawText(x_start + 5, y_pos + 5, "+")
+
+                # Draw Feedback coefficient(a)
+                if i>0:
+                    painter.drawText(x_start + 40, y_pos - 15, f"a{i}")
+                    painter.drawLine(x_start + sum_radius * 2, y_pos, x_start + 90, y_pos)#between delay block and summator
+
+                # Draw delay block (except for first node)
+            for i in range(1, max(len(a), len(b))):
+                y_pos = y_start + i * spacing
+                painter.drawRect(x_start + 90, y_pos - rect_height // 2, rect_width, rect_height)
+                painter.drawText(x_start + 100, y_pos + 5, "Z⁻¹")
+                painter.drawLine(x_start + 130, y_pos, x_start + 130, y_start)  #between z-blocks
+
+                # Draw feedfoward coefficients (b) 
+            for  i in range (len(b)):
+                y_pos = y_start + i * spacing
+                painter.drawText(x_start + 160, y_pos - 15, f"b{i}")
+                painter.drawEllipse(x_start+190, y_pos - sum_radius, 2 * sum_radius, 2 * sum_radius)
+                painter.drawText(x_start + 195, y_pos + 5, "+")
+                if i <len(self.b_coeffs)-1:
+                    painter.drawLine(x_start+200, y_pos+10, x_start+200, y_pos+70)
+                painter.drawLine(x_start+130, y_pos, x_start+190, y_pos)
+
+
+    
 class DrawingWidget(QWidget):
     def __init__(self, b_coeffs, a_coeffs, parent=None):
         super().__init__(parent)
@@ -71,7 +124,7 @@ class DrawingWidget(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        self.filter_diagram.draw(painter)
+        self.filter_diagram.draw_cascade(painter)
 
     def save_image(self, filename="filter_diagram.png"):
         pixmap = QPixmap(self.size())  # Create pixmap with widget size
@@ -98,7 +151,7 @@ class MainWindow(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-
+    import numpy as np
     # Example coefficients
     b = [0.5, -1, 1,5,7]
     a = [0.82, -1.8, 1]

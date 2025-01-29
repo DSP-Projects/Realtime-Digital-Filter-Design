@@ -173,16 +173,17 @@ class ZPlane(QWidget):
         self.poles, self.zeros = self.zeros, self.poles
         self.plot_z_plane()
 
-    def compute_filter_coefficients(self, form="direct_form_II"):
+    def compute_filter_coefficients(self):
         b = np.poly(self.zeros)
         a = np.poly(self.poles)
-        if form == "direct_form_II":
-            return a,b
-        elif form == "cascade": 
-            sos = signal.tf2sos(b, a) #(second-order sections) of the transfer function
-            return sos
-        else:
-            raise ValueError("Unsupported realization form")
+        return a,b
+    
+    def get_poles(self):
+        return self.poles
+    
+    def get_zeros(self):
+        return self.zeros
+
 
     def save_filter(self): #save poles and zeros into csv file
         options = QFileDialog.Options()
@@ -224,6 +225,7 @@ class ZPlane(QWidget):
         self.zeros = np.array(zeros, dtype=complex)
         self.poles = np.array(poles, dtype=complex)
         self.plot_z_plane()
+    
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
