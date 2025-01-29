@@ -7,9 +7,8 @@ from scipy import signal
 import csv
 
 class ZPlane(QWidget):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-
+    def __init__(self, zplane_widget):
+        super().__init__(zplane_widget)
         # Zeros and Poles
         self.zeros = np.array([], dtype=complex)
         self.poles = np.array([], dtype=complex)
@@ -77,11 +76,11 @@ class ZPlane(QWidget):
         self.canvas.draw()
         
 
-    def toggle_mode(self, mode_button):
-        self.pole_mode= not self.pole_mode
-        mode = "Pole Mode" if self.pole_mode else "Zero Mode"
-        mode_button.setText(f"Toggle Mode (Current: {mode})")
-    
+    def toggle_mode_to_zeros(self):
+        self.pole_mode= False
+    def toggle_mode_to_poles(self):
+        self.pole_mode= True
+   
     def on_click(self, event):
         if event.inaxes != self.ax:
             return
@@ -163,14 +162,16 @@ class ZPlane(QWidget):
 
     def toggle_delete(self):
         self.delete_mode= not self.delete_mode
-        return self.delete_mode
     
     def toggle_conjugate(self):
         self.conjugate_mode= not self.conjugate_mode
     
-    def swap_zeros_poles(self):
+    def swap_zeros_poles(self, index):
         self.save_state()
-        self.poles, self.zeros = self.zeros, self.poles
+        if index==0:
+            self.poles= self.zeros
+        elif index==1:
+            self.zeros= self.poles
         self.plot_z_plane()
 
     def compute_filter_coefficients(self):
@@ -224,54 +225,55 @@ class ZPlane(QWidget):
         self.zeros = np.array(zeros, dtype=complex)
         self.poles = np.array(poles, dtype=complex)
         self.plot_z_plane()
+
     
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
+# if __name__ == '__main__':
+#     app = QApplication(sys.argv)
 
-    # Create a main window
-    main_window = QMainWindow()
-    main_window.setWindowTitle("Z-Plane Tester")
+#     # Create a main window
+#     main_window = QMainWindow()
+#     main_window.setWindowTitle("Z-Plane Tester")
 
-    # Initialize ZPlane widget
-    z_plane_widget = ZPlane()
-    z_plane_widget.zeros = np.array([], dtype=complex)  # Initialize zeros array
-    z_plane_widget.poles = np.array([], dtype=complex)  # Initialize poles array
+#     # Initialize ZPlane widget
+#     z_plane_widget = ZPlane()
+#     z_plane_widget.zeros = np.array([], dtype=complex)  # Initialize zeros array
+#     z_plane_widget.poles = np.array([], dtype=complex)  # Initialize poles array
 
-    # Add ZPlane widget to main window
-    main_widget = QWidget()
-    main_layout = QVBoxLayout(main_widget)
+#     # Add ZPlane widget to main window
+#     main_widget = QWidget()
+#     main_layout = QVBoxLayout(main_widget)
 
-    # Add toggle button for mode
-    from PyQt5.QtWidgets import QPushButton
+#     # Add toggle button for mode
+#     from PyQt5.QtWidgets import QPushButton
 
-    def toggle_mode():
-        z_plane_widget.pole_mode = not z_plane_widget.pole_mode
-        mode = "Pole Mode" if z_plane_widget.pole_mode else "Zero Mode"
-        mode_button.setText(f"Toggle Mode (Current: {mode})")
+#     def toggle_mode():
+#         z_plane_widget.pole_mode = not z_plane_widget.pole_mode
+#         mode = "Pole Mode" if z_plane_widget.pole_mode else "Zero Mode"
+#         mode_button.setText(f"Toggle Mode (Current: {mode})")
 
-    def toggle_delete():
-        mode= z_plane_widget.toggle_delete()
-        delete_button.setText(f"Toggle Delete (Current: {mode})")
+#     def toggle_delete():
+#         mode= z_plane_widget.toggle_delete()
+#         delete_button.setText(f"Toggle Delete (Current: {mode})")
 
-    mode_button = QPushButton("Toggle Mode (Current: Zero Mode)")
-    mode_button.clicked.connect(toggle_mode)
-    clear_button = QPushButton("Clear all")
-    clear_button.clicked.connect(z_plane_widget.clear_all)
-    delete_button = QPushButton("Delete")
-    delete_button.clicked.connect(toggle_delete)
-    swap_button = QPushButton("Swap")
-    swap_button.clicked.connect(z_plane_widget.swap_zeros_poles)
+#     mode_button = QPushButton("Toggle Mode (Current: Zero Mode)")
+#     mode_button.clicked.connect(toggle_mode)
+#     clear_button = QPushButton("Clear all")
+#     clear_button.clicked.connect(z_plane_widget.clear_all)
+#     delete_button = QPushButton("Delete")
+#     delete_button.clicked.connect(toggle_delete)
+#     swap_button = QPushButton("Swap")
+#     swap_button.clicked.connect(z_plane_widget.swap_zeros_poles)
 
 
-    main_layout.addWidget(mode_button)
-    main_layout.addWidget(clear_button)
-    main_layout.addWidget(delete_button)
-    main_layout.addWidget(z_plane_widget)
-    main_layout.addWidget(swap_button)
+#     main_layout.addWidget(mode_button)
+#     main_layout.addWidget(clear_button)
+#     main_layout.addWidget(delete_button)
+#     main_layout.addWidget(z_plane_widget)
+#     main_layout.addWidget(swap_button)
 
-    main_window.setCentralWidget(main_widget)
-    main_window.resize(800, 600)
-    main_window.show()
+#     main_window.setCentralWidget(main_widget)
+#     main_window.resize(800, 600)
+#     main_window.show()
 
-    sys.exit(app.exec_())
+#     sys.exit(app.exec_())

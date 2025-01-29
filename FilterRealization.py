@@ -124,7 +124,7 @@ class DrawingWidget(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        self.filter_diagram.draw_cascade(painter)
+        self.filter_diagram.draw_direct_form_2(painter)
 
     def save_image(self, filename="filter_diagram.png"):
         pixmap = QPixmap(self.size())  # Create pixmap with widget size
