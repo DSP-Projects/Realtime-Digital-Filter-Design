@@ -186,12 +186,9 @@ class ZPlane(QWidget):
     def toggle_conjugate(self):
         self.conjugate_mode= not self.conjugate_mode
     
-    def swap_zeros_poles(self, index):
+    def swap_zeros_poles(self):
         self.save_state()
-        if index==0:
-            self.poles= self.zeros
-        elif index==1:
-            self.zeros= self.poles
+        self.poles, self.zeros= self.zeros, self.poles
         self.plot_z_plane()
         self.plot_filter_response()
     

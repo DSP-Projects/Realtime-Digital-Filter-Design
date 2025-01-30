@@ -101,8 +101,8 @@ class MainWindow(QMainWindow):
         self.clear_button.clicked.connect(self.clear_plane)
 
         #swapping
-        self.swap = self.findChild(QComboBox,"swapping")
-        self.swap.currentIndexChanged.connect(lambda index: self.zplane.swap_zeros_poles(index))
+        self.swap = self.findChild(QPushButton,"swapButton")
+        self.swap.clicked.connect(self.zplane.swap_zeros_poles)
 
         #undo & redo
         self.undo_button = self.findChild(QPushButton,"undo")
