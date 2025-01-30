@@ -1280,8 +1280,8 @@ margin-left:0px; </string>
                      <widget class="QWidget" name="widget_3" native="true">
                       <property name="minimumSize">
                        <size>
-                        <width>0</width>
-                        <height>0</height>
+                        <width>350</width>
+                        <height>350</height>
                        </size>
                       </property>
                      </widget>
@@ -1559,6 +1559,19 @@ QPushButton:pressed {
                </property>
               </widget>
              </item>
+             <item>
+              <spacer name="horizontalSpacer_3">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
             </layout>
            </item>
           </layout>
@@ -1826,7 +1839,7 @@ QGroupBox::title  {
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="applyCustomFilter">
+               <widget class="QPushButton" name="addCustomFilter">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -1876,7 +1889,7 @@ QPushButton:pressed {
 </string>
                 </property>
                 <property name="text">
-                 <string>Apply</string>
+                 <string>Add</string>
                 </property>
                </widget>
               </item>
@@ -1949,7 +1962,7 @@ QComboBox QAbstractItemView {
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="addFilter">
+               <widget class="QPushButton" name="applyFilter">
                 <property name="font">
                  <font>
                   <pointsize>-1</pointsize>
@@ -1987,7 +2000,7 @@ QPushButton:pressed {
 </string>
                 </property>
                 <property name="text">
-                 <string>Add</string>
+                 <string>Apply</string>
                 </property>
                </widget>
               </item>

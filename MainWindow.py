@@ -22,7 +22,6 @@ class MainWindow(QMainWindow):
         #realization
         self.filter_realization = self.findChild(QPushButton,"filterRealization")
         self.filter_realization.clicked.connect(self.open_filter_realization_window)
-        self.filter_realization_window=None
         
         #zero-pole radiobuttons
         self.zero_radioButton = self.findChild(QRadioButton, "zeros")
@@ -73,8 +72,8 @@ class MainWindow(QMainWindow):
     
     def open_filter_realization_window(self):
         self.filter_realization_window = FilterRealizationWindow(self.zplane)
-        self.filter_realization_window.setParent(self)
         self.filter_realization_window.show()
+
 
 
 if __name__ == '__main__':
