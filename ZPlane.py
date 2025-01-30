@@ -7,11 +7,12 @@ from scipy import signal
 import csv
 
 class ZPlane(QWidget):
-    def __init__(self, zplane_widget):
+    def __init__(self, zplane_widget, filter_respone):
         super().__init__(zplane_widget)
         # Zeros and Poles
         self.zeros = np.array([], dtype=complex)
         self.poles = np.array([], dtype=complex)
+        self.filter_response= filter_respone
         self.pole_mode= False 
         self.dragging = None #for dragging event
         self.delete_mode=  False
@@ -49,12 +50,14 @@ class ZPlane(QWidget):
             self.redo_stack.append((self.zeros.copy(), self.poles.copy()))  # Save current state to redo
             self.zeros, self.poles = self.undo_stack.pop()  # Restore previous state
             self.plot_z_plane()
+            self.plot_filter_response()
 
     def redo(self):
         if self.redo_stack:
             self.undo_stack.append((self.zeros.copy(), self.poles.copy()))  # Save current state to undo
             self.zeros, self.poles = self.redo_stack.pop()  # Restore redone state
             self.plot_z_plane()
+            self.plot_filter_response()
 
     def plot_z_plane(self):
         self.ax.clear()  # Clear any previous plot
@@ -69,12 +72,14 @@ class ZPlane(QWidget):
         self.ax.set_title('Zeros and Poles in the Z-Plane')
         self.ax.set_xlabel('Real Part')
         self.ax.set_ylabel('Imaginary Part')
+        self.ax.set_xlim(-2,2)
 
         if self.zeros.size > 0:
             self.ax.scatter(self.zeros.real, self.zeros.imag, s=50, color='red', label='Zeros', marker='o')
         if self.poles.size > 0:
             self.ax.scatter(self.poles.real, self.poles.imag, s=50, color='blue', label='Poles', marker='x')
-        
+        self.plot_filter_response()
+
         # Refresh the canvas
         self.canvas.draw()
         
@@ -110,6 +115,7 @@ class ZPlane(QWidget):
             elif point_type =='zero':
                 self.zeros= np.delete(self.zeros, index)
             self.plot_z_plane()
+            self.plot_filter_response()
 
         # If neither dragging an existing point nor deleting, add a new one at this position
         elif self.dragging is None:
@@ -129,6 +135,7 @@ class ZPlane(QWidget):
                 if self.conjugate_mode and click_pos.imag != 0:
                     self.zeros = np.append(self.zeros, new_zero.conjugate())
                     self.ax.scatter(new_zero.real, -1*new_zero.imag, s=50, color='red', label='Zeros', marker='o')
+            self.plot_filter_response()
             self.canvas.draw()
     
     def on_mouse_move(self, event):
@@ -145,6 +152,7 @@ class ZPlane(QWidget):
         if self.dragging:
             self.save_state()
             self.plot_z_plane()
+            self.plot_filter_response()
             self.dragging = None
 
     def clear_all(self):
@@ -152,16 +160,19 @@ class ZPlane(QWidget):
         self.poles= np.array([], dtype=complex)
         self.zeros= np.array([], dtype=complex)
         self.plot_z_plane()
+        self.plot_filter_response()
     
     def clear_poles(self):
         self.save_state()
         self.poles= np.array([], dtype=complex)
         self.plot_z_plane()
+        self.plot_filter_response()
 
     def clear_zeros(self):
         self.save_state()
         self.zeros= np.array([], dtype=complex)
         self.plot_z_plane()
+        self.plot_filter_response()
 
     def toggle_delete(self):
         self.delete_mode= not self.delete_mode
@@ -176,6 +187,7 @@ class ZPlane(QWidget):
         elif index==1:
             self.zeros= self.poles
         self.plot_z_plane()
+        self.plot_filter_response()
     
     def enforce_conjugate_pairs(self,arr):
         arr_conj = np.conj(arr[np.iscomplex(arr)])
@@ -238,5 +250,8 @@ class ZPlane(QWidget):
         self.zeros = np.array(zeros, dtype=complex)
         self.poles = np.array(poles, dtype=complex)
         self.plot_z_plane()
+        self.plot_filter_response()
 
-
+    def plot_filter_response(self):
+        b,a = self.compute_filter_coefficients()
+        self.filter_response.plot_filter_response(b,a)

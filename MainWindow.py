@@ -19,7 +19,6 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Real-time Digital Filter Design")
 
 
-
         self.filter_library = {
             "Butterworth LPF": {"order": 4, "type": "butter", "btype": "low"},
             "Butterworth HPF": {"order": 4, "type": "butter", "btype": "high"},
@@ -37,17 +36,20 @@ class MainWindow(QMainWindow):
             "Bessel HPF": {"order": 4, "type": "bessel", "btype": "high"}
         }
 
-
-
-
         self.combo_library=self.findChild(QComboBox,"libraries")
         self.setup_combo_box()
         self.combo_library.currentIndexChanged.connect(self.load_filter_with_allpass)
 
+                #magnitude plot
+        self.magnitude_plot = self.findChild(PlotWidget, "Magnitude_graph")
+        #phase plot
+        self.phase_plot = self.findChild(PlotWidget, "Phase_graph")
+        #filter_response instance
+        self.filter_response= FilterResponse(self.magnitude_plot, self.phase_plot)
 
         #z-plane
         self.z_plane_widget = self.findChild(QWidget, "widget_3")
-        self.zplane= ZPlane(self.z_plane_widget)
+        self.zplane= ZPlane(self.z_plane_widget, self.filter_response)
 
         #realization
         self.filter_realization = self.findChild(QPushButton,"filterRealization")
@@ -85,15 +87,7 @@ class MainWindow(QMainWindow):
         self.save.clicked.connect(self.zplane.save_filter)
         self.load.clicked.connect(self.zplane.load_from_file)
 
-        #magnitude plot
-        self.magnitude_plot = self.findChild(PlotWidget, "Magnitude_graph")
-        #phase plot
-        self.phase_plot = self.findChild(PlotWidget, "Phase_graph")
-    def setup_combo_box(self):
-     """Initialize the combo box with a placeholder and filter names."""
-     self.combo_library.addItem("Select Built-in Library Filters")  # Add placeholder
-     self.combo_library.addItems(self.filter_library.keys())  # Add actual filters
-     self.combo_library.setCurrentIndex(0)
+    #Fatma
     def clear_plane(self):
         index = self.clear_combobox.currentIndex()
         match index:
@@ -107,22 +101,12 @@ class MainWindow(QMainWindow):
     def open_filter_realization_window(self):
         self.filter_realization_window = FilterRealizationWindow(self.zplane)
         self.filter_realization_window.show()
-
-
-    def plot_filter_response(self,b, a):
-     frequencies, magnitude_db, phase_deg = FilterResponse.compute_filter_response(b, a)
-     if self.magnitude_plot:
-        self.magnitude_plot.clear()  # Clear the previous plot
-        self.magnitude_plot.plot(frequencies, magnitude_db, pen='r')  # Plot with red color
-
-    # Step 4: Update the phase plot with frequencies and phase in degrees
-     if self.phase_plot:
-        self.phase_plot.clear()  # Clear the previous plot
-        self.phase_plot.plot(frequencies, phase_deg, pen='b')
-
-
-
-
+    #hajer
+    def setup_combo_box(self):
+     """Initialize the combo box with a placeholder and filter names."""
+     self.combo_library.addItem("Select Built-in Library Filters")  # Add placeholder
+     self.combo_library.addItems(self.filter_library.keys())  # Add actual filters
+     self.combo_library.setCurrentIndex(0)
 
     def load_filter_with_allpass(self):
         """Load and apply the filter with all-pass elements."""
@@ -134,8 +118,7 @@ class MainWindow(QMainWindow):
         
         if not selected_filter:
             print("Invalid filter selection")
-            return
-        
+            return     
 
         filter_params = self.filter_library.get(selected_filter, None)
         if filter_params is None:
@@ -172,12 +155,12 @@ class MainWindow(QMainWindow):
             b, a = signal.ellip(order, rp, rs, wp, btype=btype, output='ba')
         elif filter_type == "bessel":
             b, a = signal.bessel(order, wp, btype=btype, output='ba')
-        self.plot_filter_response(b, a)
+        self.filter_response.plot_filter_response(b, a)
         self.zplane.compute_zeros_poles_from_coefficients(b,a)
 
         return b,a
     
-
+    
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
