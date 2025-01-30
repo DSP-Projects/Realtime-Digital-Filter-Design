@@ -7,12 +7,13 @@ from scipy import signal
 import csv
 
 class ZPlane(QWidget):
-    def __init__(self, zplane_widget, filter_respone):
+    def __init__(self, zplane_widget, filter_respone, real_time_filter):
         super().__init__(zplane_widget)
         # Zeros and Poles
         self.zeros = np.array([], dtype=complex)
         self.poles = np.array([], dtype=complex)
         self.filter_response= filter_respone
+        self.real_time_filter =real_time_filter
         self.pole_mode= False 
         self.dragging = None #for dragging event
         self.delete_mode=  False
@@ -33,8 +34,9 @@ class ZPlane(QWidget):
         self.ax.grid(True)
         # Set tight layout for better fit
         self.figure.tight_layout()
-        
+
         self.plot_z_plane()
+
         #mouse connection
         self.canvas.mpl_connect('button_press_event', self.on_click)
         self.canvas.mpl_connect('motion_notify_event', self.on_mouse_move)
@@ -59,7 +61,7 @@ class ZPlane(QWidget):
             self.plot_z_plane()
             self.plot_filter_response()
 
-    def plot_z_plane(self):
+    def plot_z_plane(self, zeros=None, poles=None):
         self.ax.clear()  # Clear any previous plot
         # Plot the unit circle
         theta = np.linspace(0, 2 * np.pi, 100)
@@ -79,6 +81,10 @@ class ZPlane(QWidget):
         if self.poles.size > 0:
             self.ax.scatter(self.poles.real, self.poles.imag, s=50, color='blue', label='Poles', marker='x')
         self.plot_filter_response()
+
+        if poles and zeros:
+            self.ax.scatter(zeros.real, zeros.imag, s=50, color='black', label='Zeros', marker='o')
+            self.ax.scatter(poles.real, poles.imag, s=50, color='black', label='Poles', marker='x')
 
         # Refresh the canvas
         self.canvas.draw()
@@ -255,3 +261,4 @@ class ZPlane(QWidget):
     def plot_filter_response(self):
         b,a = self.compute_filter_coefficients()
         self.filter_response.plot_filter_response(b,a)
+        self.real_time_filter.set_coef(b,a)

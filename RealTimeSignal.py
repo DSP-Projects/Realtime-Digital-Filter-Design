@@ -10,12 +10,11 @@ from PyQt5.QtGui import QPen
 from PyQt5.QtCore import Qt
 
 class RealTimeFilter:
-    
-    def __init__(self, b, a):
-        self.b = b
-        self.a = a
-        self.input_buffer = np.zeros(len(b))
-        self.output_buffer = np.zeros(len(a))
+    def __init__(self,):
+        self.b = None
+        self.a = None
+        self.input_buffer = np.zeros(1)
+        self.output_buffer = np.zeros(1)
 
     def apply_filter(self, x):
         # Shift buffers
@@ -28,6 +27,13 @@ class RealTimeFilter:
         y = np.dot(self.b, self.input_buffer) - np.dot(self.a[1:], self.output_buffer[1:])
         self.output_buffer[0] = y
         return y
+    def set_coef(self,b,a):
+        self.b=b
+        self.a=a
+        self.input_buffer = np.zeros(len(self.b))
+        self.output_buffer = np.zeros(len(self.a))
+
+
 
 
 class RealTimePlot(QWidget):
