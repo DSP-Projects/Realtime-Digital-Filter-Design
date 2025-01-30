@@ -97,7 +97,7 @@ class MainWindow(QMainWindow):
         self.phase_plot = self.findChild(PlotWidget, "Phase_graph")
 
 
-        self.original_plot=self.findChild(PlotWidget,"original_signal")
+        self.original_plot=self.findChild(PlotWidget,"real_signal")
         self.filtered_plot=self.findChild(PlotWidget,"filteredSignal")
         self.graphics_view=self.findChild(QGraphicsView,"touch_pad")
         self.graphics_view.setScene(QGraphicsScene())
