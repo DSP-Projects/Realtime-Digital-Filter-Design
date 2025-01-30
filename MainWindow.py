@@ -1,16 +1,22 @@
 from PyQt5.QtWidgets import QMainWindow,QComboBox, QCheckBox, QRadioButton, QApplication, QPushButton, QLabel, QSlider,QProgressBar, QWidget
+from PyQt5.QtWidgets import QMainWindow,QComboBox, QCheckBox, QRadioButton, QApplication, QPushButton, QLabel, QSlider,QProgressBar,QGraphicsView,QGraphicsScene
 from PyQt5.QtGui import QIcon
 from pyqtgraph import PlotWidget
 import sys
 import os
 from PyQt5.uic import loadUi
 from ZPlane import ZPlane
-from FilterRealization import FilterRealizationWindow
-#from FilterRealization import DrawingWidget
-#from CodeGenerator import CodeGenerator
+from RealTimeSignal import RealTimeFilter, RealTimePlot
+from Load import Load
+import pandas as pd
+from FilterRealization import FilterRealizationWindow 
+
 from FilterResponse import FilterResponse 
 from scipy import signal
 
+from RealTimeSignal import RealTimeFilter, RealTimePlot
+from Load import Load
+import pandas as pd
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -70,6 +76,7 @@ class MainWindow(QMainWindow):
         self.clear_button.clicked.connect(self.clear_plane)
         self.delete= self.findChild(QCheckBox, "delete_2")
         self.delete.clicked.connect(self.zplane.toggle_delete)
+        self.clear_button.clicked.connect(self.clear_plane)
 
         #swapping
         self.swap = self.findChild(QComboBox,"swapping")
@@ -87,7 +94,48 @@ class MainWindow(QMainWindow):
         self.save.clicked.connect(self.zplane.save_filter)
         self.load.clicked.connect(self.zplane.load_from_file)
 
-    #Fatma
+        #magnitude plot
+        self.magnitude_plot = self.findChild(PlotWidget, "Magnitude_graph")
+        #phase plot
+        self.phase_plot = self.findChild(PlotWidget, "Phase_graph")
+
+
+        self.original_plot=self.findChild(PlotWidget,"real_signal")
+        self.filtered_plot=self.findChild(PlotWidget,"filteredSignal")
+        self.graphics_view=self.findChild(QGraphicsView,"touch_pad")
+        self.graphics_view.setScene(QGraphicsScene())
+
+        self.load_radiobutton= self.findChild(QRadioButton,"loadSignal")
+        self.touch_button= self.findChild(QRadioButton,"touchPad")
+
+        self.load_pushbutton=self.findChild(QPushButton,"loadButton")
+        self.speed_slider=self.findChild(QSlider,"speedSlider")
+
+        self.load_pushbutton.clicked.connect(self.set_signal)
+        print(1)
+        
+        self.signal_data_time = []
+        self.signal_data_amplitude = []
+        self.b,self.a=self.zplane.compute_filter_coefficients()
+        if self.b is None or self.a is None:
+            print("Error: Filter coefficients not initialized properly.")
+            return
+
+
+
+        self.load_signal= Load()
+        self.real_time_filter=RealTimeFilter(self.a,self.b)
+        self.real_time_plot=RealTimePlot(self.real_time_filter,self.original_plot,self.filtered_plot,self.graphics_view,self.signal_data_time,self.signal_data_amplitude)
+
+        self.speed_slider.valueChanged.connect(self.real_time_plot.update_timer)
+        self.touch_button.clicked.connect(self.set_touch_mode)
+        self.load_radiobutton.clicked.connect(self.set_load_mode)
+
+    def setup_combo_box(self):
+     """Initialize the combo box with a placeholder and filter names."""
+     self.combo_library.addItem("Select Built-in Library Filters")  # Add placeholder
+     self.combo_library.addItems(self.filter_library.keys())  # Add actual filters
+     self.combo_library.setCurrentIndex(0)
     def clear_plane(self):
         index = self.clear_combobox.currentIndex()
         match index:
@@ -97,6 +145,43 @@ class MainWindow(QMainWindow):
                 self.zplane.clear_poles()
             case 2:
                 self.zplane.clear_all()
+
+        
+
+    def set_signal(self):
+        print(2)
+        self.file_path = self.load_signal.browse_signals()
+        if self.file_path:
+            csvFile = pd.read_csv(self.file_path)
+            self.signal_data_time = csvFile.iloc[:, 0].values
+            self.signal_data_amplitude = csvFile.iloc[:, 1].values
+            self.real_time_plot.signal_time = self.signal_data_time
+            self.real_time_plot.signal_amplitude = self.signal_data_amplitude
+            self.real_time_plot.counter = 0  # Reset the counter
+
+
+    def set_touch_mode(self):
+        self.real_time_plot.mode = "touch"
+        self.real_time_plotsignal = []  # Clear signal for touch mode
+        self.real_time_filter.counter = 0  # Reset counter
+
+        self.real_time_plot.original_data.clear()  # Clear data for original signal
+        self.real_time_plot.filtered_data.clear()  # Clear data for filtered signal
+        self.real_time_plot.original_curve.setData([])  # Clear plot
+        self.real_time_plot.filtered_curve.setData([])  # Clear plot
+        
+
+    def set_load_mode(self):
+        self.real_time_plot.mode = "load"
+        self.real_time_plot.signal = []  # Clear signal for load mode
+        self.real_time_plot.counter = 0  # Reset counter
+        self.real_time_plot.original_data.clear()  # Clear data for original signal
+        self.real_time_plot.filtered_data.clear()  # Clear data for filtered signal
+        self.real_time_plot.original_curve.setData([])  # Clear plot
+        self.real_time_plot.filtered_curve.setData([])  # Clear plot   
+    
+    def zero_pole_placement(self):
+        pass
     
     def open_filter_realization_window(self):
         self.filter_realization_window = FilterRealizationWindow(self.zplane)

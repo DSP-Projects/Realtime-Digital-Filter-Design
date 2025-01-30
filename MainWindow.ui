@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>863</width>
-    <height>809</height>
+    <height>1111</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -135,15 +135,6 @@ font-weight: bold;
            </color>
           </brush>
          </colorrole>
-         <colorrole role="PlaceholderText">
-          <brush brushstyle="NoBrush">
-           <color alpha="128">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
         </active>
         <inactive>
          <colorrole role="WindowText">
@@ -197,15 +188,6 @@ font-weight: bold;
             <red>20</red>
             <green>10</green>
             <blue>14</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="PlaceholderText">
-          <brush brushstyle="NoBrush">
-           <color alpha="128">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
            </color>
           </brush>
          </colorrole>
@@ -265,25 +247,14 @@ font-weight: bold;
            </color>
           </brush>
          </colorrole>
-         <colorrole role="PlaceholderText">
-          <brush brushstyle="NoBrush">
-           <color alpha="128">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
         </disabled>
        </palette>
       </property>
       <property name="font">
        <font>
-        <family>MS Shell Dlg 2</family>
         <pointsize>-1</pointsize>
         <weight>75</weight>
         <bold>true</bold>
-        <underline>false</underline>
        </font>
       </property>
       <property name="styleSheet">
@@ -307,7 +278,7 @@ QTabBar::tab:selected {
 }</string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="design_tab">
        <property name="palette">
@@ -367,15 +338,6 @@ QTabBar::tab:selected {
             </color>
            </brush>
           </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
          </active>
          <inactive>
           <colorrole role="WindowText">
@@ -432,15 +394,6 @@ QTabBar::tab:selected {
             </color>
            </brush>
           </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
          </inactive>
          <disabled>
           <colorrole role="WindowText">
@@ -494,15 +447,6 @@ QTabBar::tab:selected {
              <red>20</red>
              <green>10</green>
              <blue>14</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
             </color>
            </brush>
           </colorrole>
@@ -754,7 +698,7 @@ border-radius: 8px;</string>
                         <widget class="QPushButton" name="undo">
                          <property name="font">
                           <font>
-                           <family>-apple-system</family>
+                           <family>-apple-system,system-ui,Segoe UI,Roboto,Helvetica Neue,Ubuntu,sans-serif</family>
                            <weight>75</weight>
                            <bold>true</bold>
                           </font>
@@ -819,7 +763,7 @@ QPushButton:pressed {
                         <widget class="QPushButton" name="redo">
                          <property name="font">
                           <font>
-                           <family>-apple-system</family>
+                           <family>-apple-system,system-ui,Segoe UI,Roboto,Helvetica Neue,Ubuntu,sans-serif</family>
                            <weight>75</weight>
                            <bold>true</bold>
                           </font>
@@ -1637,15 +1581,6 @@ QPushButton:pressed {
             </color>
            </brush>
           </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
          </active>
          <inactive>
           <colorrole role="WindowText">
@@ -1702,15 +1637,6 @@ QPushButton:pressed {
             </color>
            </brush>
           </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
          </inactive>
          <disabled>
           <colorrole role="WindowText">
@@ -1764,15 +1690,6 @@ QPushButton:pressed {
              <red>20</red>
              <green>10</green>
              <blue>14</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
             </color>
            </brush>
           </colorrole>
@@ -2072,7 +1989,7 @@ QPushButton:pressed {
                 </layout>
                </item>
                <item>
-                <widget class="PlotWidget" name="zplane" native="true">
+                <widget class="QWidget" name="zplane" native="true">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -2220,15 +2137,6 @@ QPushButton:pressed {
             </color>
            </brush>
           </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
          </active>
          <inactive>
           <colorrole role="WindowText">
@@ -2285,15 +2193,6 @@ QPushButton:pressed {
             </color>
            </brush>
           </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
          </inactive>
          <disabled>
           <colorrole role="WindowText">
@@ -2347,15 +2246,6 @@ QPushButton:pressed {
              <red>20</red>
              <green>10</green>
              <blue>14</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
             </color>
            </brush>
           </colorrole>
@@ -2841,7 +2731,7 @@ border-radius: 15px;</string>
      <x>0</x>
      <y>0</y>
      <width>863</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
