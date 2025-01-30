@@ -20,10 +20,10 @@ class FilterDiagram:
         # Set pen and font
         pen = QPen(Qt.white, 2)
         painter.setPen(pen)
-        painter.setFont(QFont("Arial", 12))
+        painter.setFont(QFont("Arial", 9))
 
         # Base positions
-        x_start, y_start = 300, 100
+        x_start, y_start = 300, 50
         spacing = 80  # Vertical spacing between blocks
         sum_radius = 15  # Radius of summation nodes
         rect_width, rect_height = 40, 40  # Delay block size
@@ -47,7 +47,7 @@ class FilterDiagram:
 
             # Draw Feedback coefficient(a)
             if i>0:
-                painter.drawText(x_start + 40, y_pos - 15, f"a{i}")
+                painter.drawText(x_start + 40, y_pos - 15, f"a{i}={self.a_coeffs[i]:.2f}")
                 painter.drawLine(x_start + sum_radius * 2, y_pos, x_start + 90, y_pos)#between delay block and summator
 
             # Draw delay block (except for first node)
@@ -60,7 +60,7 @@ class FilterDiagram:
             # Draw feedfoward coefficients (b) 
         for  i in range (len(self.b_coeffs)):
             y_pos = y_start + i * spacing
-            painter.drawText(x_start + 160, y_pos - 15, f"b{i}")
+            painter.drawText(x_start + 160, y_pos - 15, f"b{i} = {self.b_coeffs[i]:.2f}")
             painter.drawEllipse(x_start+190, y_pos - sum_radius, 2 * sum_radius, 2 * sum_radius)
             painter.drawText(x_start + 195, y_pos + 5, "+")
             if i <len(self.b_coeffs)-1:
