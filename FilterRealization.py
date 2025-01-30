@@ -13,7 +13,7 @@ class FilterDiagram:
         self.a_coeffs = a_coeffs #denominator coefficients
         self.sos=signal.tf2sos(self.b_coeffs,self.a_coeffs) #sos: sections of second order for cascade. It returns Nx6 matrix, 
                                      #each row corresponds to [b0, b1, b2, a0, a1, a2]
-        print("(self.sos.shape) ",(self.sos.shape))
+
 
     def draw_direct_form_2(self, painter,b=None, a =None,x_start=300, i=0):
         painter.setRenderHint(QPainter.Antialiasing)
@@ -28,7 +28,8 @@ class FilterDiagram:
         spacing = 80  # Vertical spacing between blocks
         sum_radius = 15  # Radius of summation nodes
         rect_width, rect_height = 40, 40  # Delay block size
-        if i==0:
+        
+        if i == 0:
             # Draw input line
             painter.drawLine(x_start - 20, y_start, x_start, y_start)
             painter.drawText(x_start - 50, y_start + 5, "x[n]")
@@ -37,7 +38,7 @@ class FilterDiagram:
             painter.drawText(x_start + 225, y_start + 5, "y[n]")
 
         # Draw summation, delay blocks, coefficients, and connections
-        for i in range(len(self.a_coeffs)):
+        for i in range(len(a)):
             y_pos = y_start + i * spacing
 
             # Draw summation circle
@@ -48,35 +49,41 @@ class FilterDiagram:
 
             # Draw Feedback coefficient(a)
             if i>0:
-                painter.drawText(x_start + 40, y_pos - 15, f"a{i}={self.a_coeffs[i]:.2f}")
+                painter.drawText(x_start + 40, y_pos - 15, f"a{i}={a[i]:.2f}")
                 painter.drawLine(x_start + sum_radius * 2, y_pos, x_start + 90, y_pos)#between delay block and summator
 
             # Draw delay block (except for first node)
-        for i in range(1, max(len(self.a_coeffs), len(self.b_coeffs))):
+        for i in range(1, max(len(b), len(a))):
             y_pos = y_start + i * spacing
             painter.drawRect(x_start + 90, y_pos - rect_height // 2, rect_width, rect_height)
             painter.drawText(x_start + 100, y_pos + 5, "Z⁻¹")
             painter.drawLine(x_start + 130, y_pos, x_start + 130, y_start)  #between z-blocks
 
             # Draw feedfoward coefficients (b) 
-        for  i in range (len(self.b_coeffs)):
+        for  i in range (len(b)):
             y_pos = y_start + i * spacing
-            painter.drawText(x_start + 160, y_pos - 15, f"b{i} = {self.b_coeffs[i]:.2f}")
+            painter.drawText(x_start + 160, y_pos - 15, f"b{i} = {b[i]:.2f}")
             painter.drawEllipse(x_start+190, y_pos - sum_radius, 2 * sum_radius, 2 * sum_radius)
             painter.drawText(x_start + 195, y_pos + 5, "+")
-            if i <len(self.b_coeffs)-1:
+            if i <len(b)-1:
                 painter.drawLine(x_start+200, y_pos+10, x_start+200, y_pos+70)
             painter.drawLine(x_start+130, y_pos, x_start+190, y_pos)
 
     def draw_cascade(self, painter):
-        x_start=30
-        i=0
+        x_start, y_start=70, 50
+        counter=1
+        # Draw input line
+        painter.drawLine(x_start - 20, y_start, x_start, y_start)
+        painter.drawText(x_start - 50, y_start + 5, "x[n]")
         for i in range (len(self.sos)):
             section= self.sos[i]
             b,a= section[:3], section[3:]
-            self.draw_direct_form_2(painter, b,a, x_start, i)
-            x_start += 150
-            i=1
+            self.draw_direct_form_2(painter, b,a, x_start, counter)
+            x_start += 250
+        # Draw output line
+        painter.drawLine(x_start-250, y_start, x_start+200, y_start)
+        painter.drawText(x_start, y_start + 5, "y[n]")
+    
            
 
 
