@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>863</width>
+    <width>937</width>
     <height>1111</height>
    </rect>
   </property>
@@ -278,7 +278,7 @@ QTabBar::tab:selected {
 }</string>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="design_tab">
        <property name="palette">
@@ -962,7 +962,7 @@ border-radius: 8px;</string>
                      <string>Swapping</string>
                     </property>
                     <layout class="QGridLayout" name="gridLayout">
-                     <item row="0" column="0">
+                     <item row="1" column="0">
                       <spacer name="horizontalSpacer_17">
                        <property name="orientation">
                         <enum>Qt::Horizontal</enum>
@@ -975,49 +975,7 @@ border-radius: 8px;</string>
                        </property>
                       </spacer>
                      </item>
-                     <item row="0" column="1">
-                      <widget class="QComboBox" name="swapping">
-                       <property name="cursor">
-                        <cursorShape>PointingHandCursor</cursorShape>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">QComboBox {
-    font-family: &quot;Arial&quot;;
-    font-weight: 700; /* Semibold */
-    font-size: 10pt; /* Adjust the font size as needed */
- 	color: rgb(26, 70, 91);
-
-
-	background-color: #ba86a2;   /* Background color for the combo box */
-  
-    border-radius: 10px;         /* Rounded corners */
-    padding: 4px 10px;           /* Padding around the text */
-    color: white;               
-}
-
-QComboBox::drop-down {
-color: #95527d;
-}
-QComboBox QAbstractItemView {
-    background-color: #rgb(224, 224, 224);   /* Background color for the list */
-
-    selection-background-color: #a87993; /* Selection color when an item is highlighted */
-
-}</string>
-                       </property>
-                       <item>
-                        <property name="text">
-                         <string>Poles to zeros</string>
-                        </property>
-                       </item>
-                       <item>
-                        <property name="text">
-                         <string>Zeros to poles</string>
-                        </property>
-                       </item>
-                      </widget>
-                     </item>
-                     <item row="0" column="2">
+                     <item row="1" column="2">
                       <spacer name="horizontalSpacer_20">
                        <property name="orientation">
                         <enum>Qt::Horizontal</enum>
@@ -1029,6 +987,39 @@ QComboBox QAbstractItemView {
                         </size>
                        </property>
                       </spacer>
+                     </item>
+                     <item row="1" column="1">
+                      <widget class="QPushButton" name="swapButton">
+                       <property name="styleSheet">
+                        <string notr="true">QPushButton{
+  appearance: button;
+  backface-visibility: hidden;
+  background-color: #ba86a2;
+  border-radius: 10px;
+  border-width: 0;
+  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
+  box-sizing: border-box;
+font-size:16px;
+      color: white;
+   
+     border: none;
+padding-top:5px;
+padding-bottom:5px;
+
+}
+QPushButton:hover {
+    background-color: #ab7b96;    /* Slightly lighter blue when hovering */
+}
+
+QPushButton:pressed {
+    background-color: #956b83;    /* Darker blue when pressed */
+}
+</string>
+                       </property>
+                       <property name="text">
+                        <string>Swap</string>
+                       </property>
+                      </widget>
                      </item>
                     </layout>
                    </widget>
@@ -2730,7 +2721,7 @@ border-radius: 15px;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>863</width>
+     <width>937</width>
      <height>26</height>
     </rect>
    </property>
