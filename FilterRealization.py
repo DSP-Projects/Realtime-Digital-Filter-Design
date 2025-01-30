@@ -18,12 +18,12 @@ class FilterDiagram:
         painter.setRenderHint(QPainter.Antialiasing)
 
         # Set pen and font
-        pen = QPen(Qt.black, 2)
+        pen = QPen(Qt.white, 2)
         painter.setPen(pen)
         painter.setFont(QFont("Arial", 12))
 
         # Base positions
-        x_start, y_start = 50, 100
+        x_start, y_start = 300, 100
         spacing = 80  # Vertical spacing between blocks
         sum_radius = 15  # Radius of summation nodes
         rect_width, rect_height = 40, 40  # Delay block size
@@ -70,7 +70,7 @@ class FilterDiagram:
     def draw_cascade(self, painter):
         painter.setRenderHint(QPainter.Antialiasing)
         # Set Pen for drawing lines
-        pen = QPen(Qt.black, 2)
+        pen = QPen(Qt.white, 2)
         painter.setPen(pen)
         # Input and output points
         x_start, y_start = 250, 100
@@ -119,21 +119,23 @@ class FilterDiagram:
 
     
 class DrawingWidget(QWidget):
-    def __init__(self, b_coeffs, a_coeffs, parent=None):
+    def __init__(self, b_coeffs, a_coeffs, name, parent=None):
         super().__init__(parent)
         self.filter_diagram = FilterDiagram(b_coeffs, a_coeffs)
         self.setMinimumSize(600, 400)
+        self.name=name
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        self.filter_diagram.draw_direct_form_2(painter)
-        #self.filter_diagram.draw_cascade(painter)
+        if self.name=='direct':
+            self.filter_diagram.draw_direct_form_2(painter)
+        elif self.name=='cascade':
+            self.filter_diagram.draw_cascade(painter)
 
     def save_image(self, filename="filter_diagram.png"):
         pixmap = QPixmap(self.size())  # Create pixmap with widget size
         self.render(pixmap)  # Render the widget to the pixmap
         pixmap.save(filename)  # Save the pixmap as an image
-
 
 
 class FilterRealizationWindow(QMainWindow):
@@ -144,9 +146,10 @@ class FilterRealizationWindow(QMainWindow):
 
         self.cascade_widget= self.findChild(QWidget, "cascade")
         self.direct_widget= self.findChild(QWidget,"directForm2")
-        self.realizing_window_cascade= DrawingWidget(self.cascade_widget)
-        self.realizing_window_direct= DrawingWidget(self.direct_widget)
-        self.export_button= self.findChild(QPushButton, 'export')
+        b,a= zplane.compute_filter_coefficients()
+        self.realizing_window_cascade= DrawingWidget(b,a, 'cascade', self.cascade_widget)
+        self.realizing_window_direct= DrawingWidget(b,a, 'direct', self.direct_widget)
+        self.export_button= self.findChild(QPushButton, "export_2")
         self.export_button.clicked.connect(self.export_filter_realization)
         #Generate C code
         self.code_generator= CodeGenerator(zplane)
@@ -156,33 +159,3 @@ class FilterRealizationWindow(QMainWindow):
     def export_filter_realization(self):
         self.realizing_window_cascade.save_image("cascade_form.png")
         self.realizing_window_direct.save_image("direct_form.png")
-
-
-# class MainWindow(QMainWindow):
-#     def __init__(self, b_coeffs, a_coeffs):
-#         super().__init__()
-#         self.setWindowTitle("Direct Form II Transposed Filter")
-#         self.setGeometry(100, 100, 700, 500)
-
-#         # Main widget for drawing
-#         self.drawing_widget = DrawingWidget(b_coeffs, a_coeffs)
-        
-#         # Set layout
-#         layout = QVBoxLayout()
-#         layout.addWidget(self.drawing_widget)
-
-#         # Central widget
-#         central_widget = QWidget()
-#         central_widget.setLayout(layout)
-#         self.setCentralWidget(central_widget)
-
-# if __name__ == "__main__":
-#     app = QApplication(sys.argv)
-#     import numpy as np
-#     # Example coefficients
-#     b = [0.5, -1, 1,5,7]
-#     a = [0.82, -1.8, 1]
-
-#     window = MainWindow(b, a)
-#     window.show()
-#     sys.exit(app.exec_())

@@ -1553,7 +1553,7 @@ QGroupBox::title  {
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="applyCustomFilter">
+               <widget class="QPushButton" name="addCustomFilter">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -1603,7 +1603,7 @@ QPushButton:pressed {
 </string>
                 </property>
                 <property name="text">
-                 <string>Apply</string>
+                 <string>Add</string>
                 </property>
                </widget>
               </item>
@@ -1676,7 +1676,7 @@ QComboBox QAbstractItemView {
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="addFilter">
+               <widget class="QPushButton" name="applyFilter">
                 <property name="font">
                  <font>
                   <pointsize>-1</pointsize>
@@ -1714,7 +1714,7 @@ QPushButton:pressed {
 </string>
                 </property>
                 <property name="text">
-                 <string>Add</string>
+                 <string>Apply</string>
                 </property>
                </widget>
               </item>
