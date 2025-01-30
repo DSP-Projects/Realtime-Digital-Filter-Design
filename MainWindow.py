@@ -6,6 +6,8 @@ import os
 from PyQt5.uic import loadUi
 from ZPlane import ZPlane
 from FilterRealization import FilterRealizationWindow
+#from FilterRealization import DrawingWidget
+#from CodeGenerator import CodeGenerator
 from FilterResponse import FilterResponse 
 from scipy import signal
 

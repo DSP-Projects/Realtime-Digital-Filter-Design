@@ -176,9 +176,15 @@ class ZPlane(QWidget):
         elif index==1:
             self.zeros= self.poles
         self.plot_z_plane()
-
+    
+    def enforce_conjugate_pairs(self,arr):
+        arr_conj = np.conj(arr[np.iscomplex(arr)])
+        return np.hstack([arr, arr_conj])
+    
     def compute_filter_coefficients(self):
-        b,a = signal.zpk2tf(self.zeros, self.poles, 1)
+        z = self.enforce_conjugate_pairs(self.zeros)
+        p = self.enforce_conjugate_pairs(self.poles)
+        b,a = signal.zpk2tf(z, p, 1)
         return b,a
     
     def compute_zeros_poles_from_coefficients(self, b,a):
