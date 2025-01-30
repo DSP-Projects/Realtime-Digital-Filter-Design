@@ -29,7 +29,6 @@ class ZPlane(QWidget):
         zplane_widget.setLayout(layout)
         # Create subplot
         self.ax = self.figure.add_subplot(111)
-        self.ax.set_aspect('equal')  # Keep axes square
         self.ax.grid(True)
         # Set tight layout for better fit
         self.figure.tight_layout()

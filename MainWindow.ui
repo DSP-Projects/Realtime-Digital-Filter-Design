@@ -1275,7 +1275,18 @@ margin-left:0px; </string>
                    </layout>
                   </item>
                   <item>
-                   <widget class="QWidget" name="zplaneWidget" native="true"/>
+                   <layout class="QHBoxLayout" name="spectrogramLayout_4">
+                    <item>
+                     <widget class="QWidget" name="widget_3" native="true">
+                      <property name="minimumSize">
+                       <size>
+                        <width>0</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
                   </item>
                  </layout>
                 </widget>
@@ -1391,7 +1402,82 @@ QGroupBox::title  {
            <item row="0" column="0">
             <layout class="QHBoxLayout" name="horizontalLayout_19">
              <item>
+              <layout class="QVBoxLayout" name="verticalLayout_10" stretch="0,0">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="modeLabel_2">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Overpass SemiBold</family>
+                   <pointsize>12</pointsize>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color:#ffffff;
+margin-top: 20px;
+margin-bottom: 10px;
+border: None;</string>
+                 </property>
+                 <property name="text">
+                  <string>Built in libraries</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QComboBox" name="libraries">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QComboBox {
+    font-family: &quot;Arial&quot;;
+    font-weight: 700; /* Semibold */
+    font-size: 10pt; /* Adjust the font size as needed */
+ 	color: rgb(26, 70, 91);
+
+
+	background-color: #ba86a2;   /* Background color for the combo box */
+  
+    border-radius: 10px;         /* Rounded corners */
+    padding: 4px 10px;           /* Padding around the text */
+    color: white;               
+}
+
+QComboBox::drop-down {
+color: #95527d;
+}
+QComboBox QAbstractItemView {
+    background-color: #rgb(224, 224, 224);   /* Background color for the list */
+
+    selection-background-color: #a87993; /* Selection color when an item is highlighted */
+
+}</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item>
               <widget class="QPushButton" name="save">
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
                <property name="toolTip">
                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;save the designed filter&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
@@ -1406,7 +1492,7 @@ QGroupBox::title  {
   box-sizing: border-box;
 font-size:16px;
       color: white;
-   
+   margin-left:20px;
      border: none;
 padding-top:5px;
 padding-bottom:5px;
@@ -1429,6 +1515,15 @@ QPushButton:pressed {
              </item>
              <item>
               <widget class="QPushButton" name="load">
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
                <property name="toolTip">
                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;load filter&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
@@ -1463,19 +1558,6 @@ QPushButton:pressed {
                 <string>Load</string>
                </property>
               </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_3">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
              </item>
             </layout>
            </item>

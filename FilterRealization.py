@@ -1,15 +1,17 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton
 from PyQt5.QtGui import QPainter, QPen, QFont
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
 from scipy import signal
+from PyQt5.uic import loadUi
+from CodeGenerator import CodeGenerator
 
 class FilterDiagram:
     def __init__(self, b_coeffs, a_coeffs):
         self.b_coeffs = b_coeffs #numerator coefficients
         self.a_coeffs = a_coeffs #denominator coefficients
-        self.sos=signal.tf2sos(b, a) #sos: sections of second order for cascade. It returns Nx6 matrix, 
+        self.sos=signal.tf2sos(self.b_coeffs,self.a_coeffs) #sos: sections of second order for cascade. It returns Nx6 matrix, 
                                      #each row corresponds to [b0, b1, b2, a0, a1, a2]
 
     def draw_direct_form_2(self, painter, ):
@@ -125,37 +127,62 @@ class DrawingWidget(QWidget):
     def paintEvent(self, event):
         painter = QPainter(self)
         self.filter_diagram.draw_direct_form_2(painter)
+        #self.filter_diagram.draw_cascade(painter)
 
     def save_image(self, filename="filter_diagram.png"):
         pixmap = QPixmap(self.size())  # Create pixmap with widget size
         self.render(pixmap)  # Render the widget to the pixmap
         pixmap.save(filename)  # Save the pixmap as an image
 
-class MainWindow(QMainWindow):
-    def __init__(self, b_coeffs, a_coeffs):
-        super().__init__()
-        self.setWindowTitle("Direct Form II Transposed Filter")
-        self.setGeometry(100, 100, 700, 500)
 
-        # Main widget for drawing
-        self.drawing_widget = DrawingWidget(b_coeffs, a_coeffs)
+
+class FilterRealizationWindow(QMainWindow):
+    def __init__(self, zplane):
+        super(FilterRealizationWindow, self).__init__()
+        loadUi("FilterRealization.ui", self)
+        self.setWindowTitle("Filter Realization")
+
+        self.cascade_widget= self.findChild(QWidget, "cascade")
+        self.direct_widget= self.findChild(QWidget,"directForm2")
+        self.realizing_window_cascade= DrawingWidget(self.cascade_widget)
+        self.realizing_window_direct= DrawingWidget(self.direct_widget)
+        self.export_button= self.findChild(QPushButton, 'export')
+        self.export_button.clicked.connect(self.export_filter_realization)
+        #Generate C code
+        self.code_generator= CodeGenerator(zplane)
+        self.generate_code_button= self.findChild(QPushButton, 'generateCode')
+        self.generate_code_button.clicked.connect(self.code_generator.generate_c_code)
+
+    def export_filter_realization(self):
+        self.realizing_window_cascade.save_image("cascade_form.png")
+        self.realizing_window_direct.save_image("direct_form.png")
+
+
+# class MainWindow(QMainWindow):
+#     def __init__(self, b_coeffs, a_coeffs):
+#         super().__init__()
+#         self.setWindowTitle("Direct Form II Transposed Filter")
+#         self.setGeometry(100, 100, 700, 500)
+
+#         # Main widget for drawing
+#         self.drawing_widget = DrawingWidget(b_coeffs, a_coeffs)
         
-        # Set layout
-        layout = QVBoxLayout()
-        layout.addWidget(self.drawing_widget)
+#         # Set layout
+#         layout = QVBoxLayout()
+#         layout.addWidget(self.drawing_widget)
 
-        # Central widget
-        central_widget = QWidget()
-        central_widget.setLayout(layout)
-        self.setCentralWidget(central_widget)
+#         # Central widget
+#         central_widget = QWidget()
+#         central_widget.setLayout(layout)
+#         self.setCentralWidget(central_widget)
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    import numpy as np
-    # Example coefficients
-    b = [0.5, -1, 1,5,7]
-    a = [0.82, -1.8, 1]
+# if __name__ == "__main__":
+#     app = QApplication(sys.argv)
+#     import numpy as np
+#     # Example coefficients
+#     b = [0.5, -1, 1,5,7]
+#     a = [0.82, -1.8, 1]
 
-    window = MainWindow(b, a)
-    window.show()
-    sys.exit(app.exec_())
+#     window = MainWindow(b, a)
+#     window.show()
+#     sys.exit(app.exec_())

@@ -9,6 +9,7 @@ from ZPlane import ZPlane
 from RealTimeSignal import RealTimeFilter, RealTimePlot
 from Load import Load
 import pandas as pd
+from FilterRealization import FilterRealizationWindow 
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
@@ -17,11 +18,13 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Real-time Digital Filter Design")
 
         #z-plane
-        self.z_plane_widget = self.findChild(QWidget, "zplaneWidget")
+        self.z_plane_widget = self.findChild(QWidget, "widget_3")
         self.zplane= ZPlane(self.z_plane_widget)
-        #filter design (fatma)
-        
 
+        #realization
+        self.filter_realization = self.findChild(QPushButton,"filterRealization")
+        self.filter_realization.clicked.connect(self.open_filter_realization_window)
+        
         #zero-pole radiobuttons
         self.zero_radioButton = self.findChild(QRadioButton, "zeros")
         self.pole_radioButton = self.findChild(QRadioButton, "poles")
@@ -106,7 +109,11 @@ class MainWindow(QMainWindow):
     def zero_pole_placement(self):
         pass
     
-          
+    def open_filter_realization_window(self):
+        self.filter_realization_window = FilterRealizationWindow(self.zplane)
+        self.filter_realization_window.show()
+
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
