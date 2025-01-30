@@ -46,7 +46,6 @@ class RealTimePlot(QWidget):
         self.filtered_data = []
         self.signal_time=signal_time
         self.signal_amplitude=signal_amplitude
-
         self.scene = graphics_view.scene()
         self.last_pos = None
         self.mode="load"

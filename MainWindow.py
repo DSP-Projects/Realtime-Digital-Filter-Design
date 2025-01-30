@@ -14,6 +14,9 @@ from FilterRealization import FilterRealizationWindow
 from FilterResponse import FilterResponse 
 from scipy import signal
 
+from RealTimeSignal import RealTimeFilter, RealTimePlot
+from Load import Load
+import pandas as pd
 class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()

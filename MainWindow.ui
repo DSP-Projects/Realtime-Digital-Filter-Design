@@ -278,7 +278,7 @@ QTabBar::tab:selected {
 }</string>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="design_tab">
        <property name="palette">
@@ -1989,7 +1989,7 @@ QPushButton:pressed {
                 </layout>
                </item>
                <item>
-                <widget class="PlotWidget" name="zplane" native="true">
+                <widget class="QWidget" name="zplane" native="true">
                  <property name="sizePolicy">
                   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                    <horstretch>0</horstretch>
@@ -2295,7 +2295,7 @@ QGroupBox::title  {
 }</string>
              </property>
              <property name="title">
-              <string>Original Signal</string>
+              <string>Real Signal</string>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_7">
               <item>
