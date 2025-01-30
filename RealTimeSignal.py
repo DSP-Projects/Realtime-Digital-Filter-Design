@@ -46,13 +46,14 @@ class RealTimePlot(QWidget):
         self.filtered_data = []
         self.signal_time=signal_time
         self.signal_amplitude=signal_amplitude
-        self.graphics_view=graphics_view
+
         self.scene = graphics_view.scene()
         self.last_pos = None
         self.mode="load"
         self.signal = []
 
-
+        self.graphics_view = graphics_view
+        self.graphics_view.viewport().installEventFilter(self)
         # Timer for real-time update
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_plot)
@@ -92,6 +93,7 @@ class RealTimePlot(QWidget):
                 self.counter += 1
         elif self.mode == "touch":
             # Keep the existing logic for touch mode
+         
             if self.counter < len(self.signal):
                 x = self.signal[self.counter]
                 y = self.filter_instance.apply_filter(x)
@@ -99,7 +101,7 @@ class RealTimePlot(QWidget):
                 self.original_data.append(x)
                 self.filtered_data.append(y)
 
-                if len(self.original_data) > 500:
+                if len(self.original_data) > 5000:
                     self.original_data.pop(0)
                     self.filtered_data.pop(0)
 
@@ -127,17 +129,27 @@ class RealTimePlot(QWidget):
 
         if self.last_pos is not None:
             velocity = np.sqrt((pos.x() - self.last_pos.x())**2 + (pos.y() - self.last_pos.y())**2)
-            signal_value = velocity / 10
+
+            # Set a minimum threshold to ignore small movements
+            velocity_threshold = 0.5  # Adjust this threshold to your needs
+            if velocity > velocity_threshold:
+                # Map velocity directly to signal value (you can adjust the division factor for sensitivity)
+                signal_value = velocity / 10  # You can adjust this factor to control the sensitivity
+            else:
+                signal_value = 0  # No movement, no signal change
+
+            # Update the signal with the new value
             self.signal.append(signal_value)
 
-            if len(self.signal) > 10000:
+            # Limit the length of the signal list to avoid overflow
+            if len(self.signal) > 5000:
                 self.signal.pop(0)
 
-            pen = QPen(Qt.blue)
-            pen.setWidth(2)
-            self.scene.addEllipse(pos.x(), pos.y(), 2, 2, pen)
-
+        # Update the last position for next event
         self.last_pos = pos
+
+
+
 
 
     def update_signal_label(self):

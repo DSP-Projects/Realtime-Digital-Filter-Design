@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>863</width>
-    <height>809</height>
+    <width>858</width>
+    <height>651</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -135,15 +135,6 @@ font-weight: bold;
            </color>
           </brush>
          </colorrole>
-         <colorrole role="PlaceholderText">
-          <brush brushstyle="NoBrush">
-           <color alpha="128">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
         </active>
         <inactive>
          <colorrole role="WindowText">
@@ -197,15 +188,6 @@ font-weight: bold;
             <red>20</red>
             <green>10</green>
             <blue>14</blue>
-           </color>
-          </brush>
-         </colorrole>
-         <colorrole role="PlaceholderText">
-          <brush brushstyle="NoBrush">
-           <color alpha="128">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
            </color>
           </brush>
          </colorrole>
@@ -265,25 +247,14 @@ font-weight: bold;
            </color>
           </brush>
          </colorrole>
-         <colorrole role="PlaceholderText">
-          <brush brushstyle="NoBrush">
-           <color alpha="128">
-            <red>255</red>
-            <green>255</green>
-            <blue>255</blue>
-           </color>
-          </brush>
-         </colorrole>
         </disabled>
        </palette>
       </property>
       <property name="font">
        <font>
-        <family>MS Shell Dlg 2</family>
         <pointsize>-1</pointsize>
         <weight>75</weight>
         <bold>true</bold>
-        <underline>false</underline>
        </font>
       </property>
       <property name="styleSheet">
@@ -307,7 +278,7 @@ QTabBar::tab:selected {
 }</string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="design_tab">
        <property name="palette">
@@ -367,15 +338,6 @@ QTabBar::tab:selected {
             </color>
            </brush>
           </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
          </active>
          <inactive>
           <colorrole role="WindowText">
@@ -429,15 +391,6 @@ QTabBar::tab:selected {
              <red>20</red>
              <green>10</green>
              <blue>14</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
             </color>
            </brush>
           </colorrole>
@@ -497,15 +450,6 @@ QTabBar::tab:selected {
             </color>
            </brush>
           </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
          </disabled>
         </palette>
        </property>
@@ -539,7 +483,7 @@ QGroupBox::title  {
            <string notr="true">border: none;</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_11">
-           <item row="1" column="0">
+           <item row="0" column="0">
             <layout class="QGridLayout" name="gridLayout_10">
              <item row="0" column="0">
               <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -583,417 +527,6 @@ QGroupBox::title  {
                   <string>Zeros-poles placement:</string>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_9">
-                  <item row="0" column="0">
-                   <layout class="QHBoxLayout" name="horizontalLayout_6">
-                    <item>
-                     <spacer name="horizontalSpacer_12">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeType">
-                       <enum>QSizePolicy::Maximum</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>12</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                   </layout>
-                  </item>
-                  <item row="5" column="0">
-                   <widget class="QGroupBox" name="groupBox">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">QGroupBox {
-background-color: #321a24;
-}
-background-color: #784B84;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-     border: 1.2px solid white;
-border-style: outset;
-border-radius: 8px;</string>
-                    </property>
-                    <layout class="QHBoxLayout" name="horizontalLayout_9">
-                     <item>
-                      <layout class="QHBoxLayout" name="horizontalLayout_4">
-                       <item>
-                        <widget class="QComboBox" name="clearCombo">
-                         <property name="cursor">
-                          <cursorShape>PointingHandCursor</cursorShape>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QComboBox {
-    font-family: &quot;Arial&quot;;
-    font-weight: 700; /* Semibold */
-    font-size: 10pt; /* Adjust the font size as needed */
- 	color: rgb(26, 70, 91);
-
-
-	background-color: #ba86a2;   /* Background color for the combo box */
-  
-    border-radius: 10px;         /* Rounded corners */
-    padding: 4px 10px;           /* Padding around the text */
-    color: white;               
-}
-
-QComboBox::drop-down {
-color: #95527d;
-}
-QComboBox QAbstractItemView {
-    background-color: #rgb(224, 224, 224);   /* Background color for the list */
-
-    selection-background-color: #a87993; /* Selection color when an item is highlighted */
-
-}</string>
-                         </property>
-                         <item>
-                          <property name="text">
-                           <string>All Zeros</string>
-                          </property>
-                         </item>
-                         <item>
-                          <property name="text">
-                           <string>All poles</string>
-                          </property>
-                         </item>
-                         <item>
-                          <property name="text">
-                           <string>All</string>
-                          </property>
-                         </item>
-                        </widget>
-                       </item>
-                      </layout>
-                     </item>
-                     <item>
-                      <widget class="QPushButton" name="clear">
-                       <property name="styleSheet">
-                        <string notr="true">QPushButton{
-  appearance: button;
-  backface-visibility: hidden;
-  background-color: #ba86a2;
-  border-radius: 10px;
-  border-width: 0;
-  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
-  box-sizing: border-box;
-font-size:16px;
-      color: white;
-   
-     border: none;
-padding-top:5px;
-padding-bottom:5px;
-
-}
-QPushButton:hover {
-    background-color: #ab7b96;    /* Slightly lighter blue when hovering */
-}
-
-QPushButton:pressed {
-    background-color: #956b83;    /* Darker blue when pressed */
-}
-</string>
-                       </property>
-                       <property name="text">
-                        <string>Clear</string>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </widget>
-                  </item>
-                  <item row="8" column="0">
-                   <widget class="QGroupBox" name="groupBox_2">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">QGroupBox {
-background-color: #321a24;
-}
-background-color: #784B84;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-     border: 1.2px solid white;
-border-style: outset;
-border-radius: 8px;</string>
-                    </property>
-                    <property name="title">
-                     <string>Undo and Redo</string>
-                    </property>
-                    <layout class="QHBoxLayout" name="horizontalLayout_10">
-                     <item>
-                      <layout class="QHBoxLayout" name="horizontalLayout_7">
-                       <item>
-                        <spacer name="horizontalSpacer_13">
-                         <property name="orientation">
-                          <enum>Qt::Horizontal</enum>
-                         </property>
-                         <property name="sizeHint" stdset="0">
-                          <size>
-                           <width>40</width>
-                           <height>20</height>
-                          </size>
-                         </property>
-                        </spacer>
-                       </item>
-                       <item>
-                        <widget class="QPushButton" name="undo">
-                         <property name="font">
-                          <font>
-                           <family>-apple-system</family>
-                           <weight>75</weight>
-                           <bold>true</bold>
-                          </font>
-                         </property>
-                         <property name="cursor">
-                          <cursorShape>PointingHandCursor</cursorShape>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QPushButton{
-appearance: button;
-backface-visibility: hidden;
-  background-color: #ba86a2;
-border-radius: 6px;
-border-width: 0;
-box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
-box-sizing: border-box;
-color: #fff;
-cursor: pointer;
-font-family: -apple-system,system-ui,&quot;Segoe UI&quot;,Roboto,&quot;Helvetica Neue&quot;,Ubuntu,sans-serif;
-font-size: 100%;
-
-line-height: 1.15;
-outline: none;
-overflow: hidden;
-padding: 3 10px;
-position: relative;
-text-align: center;
-text-transform: none;
-transform: translateZ(0);
-transition: all .2s,box-shadow .08s ease-in;
-user-select: none;
--webkit-user-select: none;
-touch-action: manipulation;
-
-border-style: outset;
-border-radius: 10px;
-}
-QPushButton:hover {
-    background-color: #ab7b96;    /* Slightly lighter blue when hovering */
-}
-
-QPushButton:pressed {
-    background-color: #956b83;    /* Darker blue when pressed */
-}</string>
-                         </property>
-                         <property name="text">
-                          <string/>
-                         </property>
-                         <property name="icon">
-                          <iconset>
-                           <normaloff>icons/undo.png</normaloff>icons/undo.png</iconset>
-                         </property>
-                         <property name="iconSize">
-                          <size>
-                           <width>25</width>
-                           <height>25</height>
-                          </size>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <widget class="QPushButton" name="redo">
-                         <property name="font">
-                          <font>
-                           <family>-apple-system</family>
-                           <weight>75</weight>
-                           <bold>true</bold>
-                          </font>
-                         </property>
-                         <property name="cursor">
-                          <cursorShape>PointingHandCursor</cursorShape>
-                         </property>
-                         <property name="toolTip">
-                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;replay&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                         </property>
-                         <property name="styleSheet">
-                          <string notr="true">QPushButton{
-appearance: button;
-backface-visibility: hidden;
-  background-color: #ba86a2;
-border-radius: 6px;
-border-width: 0;
-box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
-box-sizing: border-box;
-color: #fff;
-cursor: pointer;
-font-family: -apple-system,system-ui,&quot;Segoe UI&quot;,Roboto,&quot;Helvetica Neue&quot;,Ubuntu,sans-serif;
-font-size: 100%;
-
-line-height: 1.15;
-outline: none;
-overflow: hidden;
-padding: 3 10px;
-position: relative;
-text-align: center;
-text-transform: none;
-transform: translateZ(0);
-transition: all .2s,box-shadow .08s ease-in;
-user-select: none;
--webkit-user-select: none;
-touch-action: manipulation;
-
-border-style: outset;
-border-radius: 10px;
-}
-QPushButton:hover {
-    background-color: #ab7b96;    /* Slightly lighter blue when hovering */
-}
-
-QPushButton:pressed {
-    background-color: #956b83;    /* Darker blue when pressed */
-}</string>
-                         </property>
-                         <property name="text">
-                          <string/>
-                         </property>
-                         <property name="icon">
-                          <iconset>
-                           <normaloff>icons/redo.png</normaloff>icons/redo.png</iconset>
-                         </property>
-                         <property name="iconSize">
-                          <size>
-                           <width>25</width>
-                           <height>25</height>
-                          </size>
-                         </property>
-                        </widget>
-                       </item>
-                       <item>
-                        <spacer name="horizontalSpacer_14">
-                         <property name="orientation">
-                          <enum>Qt::Horizontal</enum>
-                         </property>
-                         <property name="sizeHint" stdset="0">
-                          <size>
-                           <width>40</width>
-                           <height>20</height>
-                          </size>
-                         </property>
-                        </spacer>
-                       </item>
-                      </layout>
-                     </item>
-                    </layout>
-                   </widget>
-                  </item>
-                  <item row="2" column="0">
-                   <layout class="QVBoxLayout" name="verticalLayout_3">
-                    <item>
-                     <layout class="QHBoxLayout" name="horizontalLayout_5">
-                      <item>
-                       <widget class="QRadioButton" name="zeros">
-                        <property name="cursor">
-                         <cursorShape>PointingHandCursor</cursorShape>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">   font-family: &quot;Arial&quot;;
-    font-weight: 600; /* Semibold */
-    font-size: 11pt; /* Adjust the font size as needed */
- 	color: rgb(26, 70, 91);
-    border: 1px solid  rgb(26, 70, 91);; /* Set the border to 1px solid white */
-	margin-bottom: 0px;
-  background-color: #ba86a2;
-    border: 1px solid #ffffff;   /* Border around the combo box */
-    border-radius: 10px;         /* Rounded corners */
-    padding: 6px 10px;           /* Padding around the text */
-    color: white;       
-height:14px;
-border-radius: 8px;        
-  margin-right:50px;</string>
-                        </property>
-                        <property name="text">
-                         <string>Zeros</string>
-                        </property>
-                       </widget>
-                      </item>
-                      <item>
-                       <widget class="QRadioButton" name="poles">
-                        <property name="cursor">
-                         <cursorShape>PointingHandCursor</cursorShape>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">   font-family: &quot;Arial&quot;;
-    font-weight: 600; /* Semibold */
-    font-size: 11pt; /* Adjust the font size as needed */
- 	color: #321a24;
-    border: 1px solid  rgb(26, 70, 91);; /* Set the border to 1px solid white */
-	margin-bottom: 0px;
-  background-color: #ba86a2;
-    border: 1px solid #ffffff;   /* Border around the combo box */
-    border-radius: 10px;         /* Rounded corners */
-    padding: 6px 10px;           /* Padding around the text */
-    color: white;       
-height:14px;
-border-radius: 8px;        
-  margin-right:50px;</string>
-                        </property>
-                        <property name="text">
-                         <string>Poles</string>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </item>
-                    <item>
-                     <layout class="QHBoxLayout" name="horizontalLayout_23">
-                      <item>
-                       <widget class="QCheckBox" name="conjugateCheck">
-                        <property name="cursor">
-                         <cursorShape>PointingHandCursor</cursorShape>
-                        </property>
-                        <property name="styleSheet">
-                         <string notr="true">   font-family: &quot;Arial&quot;;
-    font-weight: 600; /* Semibold */
-    font-size: 11pt; /* Adjust the font size as needed */
- 	color: rgb(26, 70, 91);
-    border: 1px solid  rgb(26, 70, 91);; /* Set the border to 1px solid white */
-	margin-bottom: 0px;
-  background-color: #ba86a2;
-    border: 1px solid #ffffff;   /* Border around the combo box */
-    border-radius: 10px;         /* Rounded corners */
-    padding: 6px 10px;           /* Padding around the text */
-    color: white;       
-height:14px;
-border-radius: 8px;        
-</string>
-                        </property>
-                        <property name="text">
-                         <string>Conjugate</string>
-                        </property>
-                       </widget>
-                      </item>
-                     </layout>
-                    </item>
-                   </layout>
-                  </item>
-                  <item row="6" column="0">
-                   <layout class="QHBoxLayout" name="horizontalLayout_27"/>
-                  </item>
                   <item row="7" column="0">
                    <widget class="QGroupBox" name="groupBox">
                     <property name="sizePolicy">
@@ -1089,43 +622,476 @@ QComboBox QAbstractItemView {
                     </layout>
                    </widget>
                   </item>
-                  <item row="9" column="0">
-                   <layout class="QHBoxLayout" name="horizontalLayout_17">
-                    <property name="spacing">
-                     <number>3</number>
-                    </property>
+                  <item row="0" column="0">
+                   <layout class="QHBoxLayout" name="horizontalLayout_6">
                     <item>
-                     <spacer name="horizontalSpacer_2">
+                     <spacer name="horizontalSpacer_12">
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
+                      </property>
+                      <property name="sizeType">
+                       <enum>QSizePolicy::Maximum</enum>
                       </property>
                       <property name="sizeHint" stdset="0">
                        <size>
                         <width>40</width>
-                        <height>20</height>
+                        <height>12</height>
                        </size>
                       </property>
                      </spacer>
                     </item>
+                   </layout>
+                  </item>
+                  <item row="5" column="0">
+                   <widget class="QGroupBox" name="groupBox">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QGroupBox {
+background-color: #321a24;
+}
+background-color: #784B84;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+     border: 1.2px solid white;
+border-style: outset;
+border-radius: 8px;</string>
+                    </property>
+                    <layout class="QHBoxLayout" name="horizontalLayout_9">
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayout_4">
+                       <item>
+                        <widget class="QComboBox" name="clearCombo">
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QComboBox {
+    font-family: &quot;Arial&quot;;
+    font-weight: 700; /* Semibold */
+    font-size: 10pt; /* Adjust the font size as needed */
+ 	color: rgb(26, 70, 91);
+
+
+	background-color: #ba86a2;   /* Background color for the combo box */
+  
+    border-radius: 10px;         /* Rounded corners */
+    padding: 4px 10px;           /* Padding around the text */
+    color: white;               
+}
+
+QComboBox::drop-down {
+color: #95527d;
+}
+QComboBox QAbstractItemView {
+    background-color: #rgb(224, 224, 224);   /* Background color for the list */
+
+    selection-background-color: #a87993; /* Selection color when an item is highlighted */
+
+}</string>
+                         </property>
+                         <item>
+                          <property name="text">
+                           <string>Current</string>
+                          </property>
+                         </item>
+                         <item>
+                          <property name="text">
+                           <string>All Zeros</string>
+                          </property>
+                         </item>
+                         <item>
+                          <property name="text">
+                           <string>All poles</string>
+                          </property>
+                         </item>
+                         <item>
+                          <property name="text">
+                           <string>All</string>
+                          </property>
+                         </item>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="clear">
+                         <property name="maximumSize">
+                          <size>
+                           <width>200</width>
+                           <height>16777215</height>
+                          </size>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton{
+  appearance: button;
+  backface-visibility: hidden;
+  background-color: #ba86a2;
+  border-radius: 10px;
+  border-width: 0;
+  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
+  box-sizing: border-box;
+font-size:16px;
+      color: white;
+   
+     border: none;
+padding-top:5px;
+padding-bottom:5px;
+
+}
+QPushButton:hover {
+    background-color: #ab7b96;    /* Slightly lighter blue when hovering */
+}
+
+QPushButton:pressed {
+    background-color: #956b83;    /* Darker blue when pressed */
+}
+</string>
+                         </property>
+                         <property name="text">
+                          <string>Clear</string>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
+                   <layout class="QVBoxLayout" name="verticalLayout_3">
                     <item>
-                     <widget class="QPushButton" name="filterRealization">
-                      <property name="minimumSize">
-                       <size>
-                        <width>250</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>200</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">QPushButton{
+                     <layout class="QHBoxLayout" name="horizontalLayout_5">
+                      <item>
+                       <widget class="QRadioButton" name="zeros">
+                        <property name="cursor">
+                         <cursorShape>PointingHandCursor</cursorShape>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">   font-family: &quot;Arial&quot;;
+    font-weight: 600; /* Semibold */
+    font-size: 11pt; /* Adjust the font size as needed */
+ 	color: rgb(26, 70, 91);
+    border: 1px solid  rgb(26, 70, 91);; /* Set the border to 1px solid white */
+	margin-bottom: 0px;
+  background-color: #ba86a2;
+    border: 1px solid #ffffff;   /* Border around the combo box */
+    border-radius: 10px;         /* Rounded corners */
+    padding: 6px 10px;           /* Padding around the text */
+    color: white;       
+height:14px;
+border-radius: 8px;        
+  margin-right:50px;</string>
+                        </property>
+                        <property name="text">
+                         <string>Zeros</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QRadioButton" name="poles">
+                        <property name="cursor">
+                         <cursorShape>PointingHandCursor</cursorShape>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">   font-family: &quot;Arial&quot;;
+    font-weight: 600; /* Semibold */
+    font-size: 11pt; /* Adjust the font size as needed */
+ 	color: #321a24;
+    border: 1px solid  rgb(26, 70, 91);; /* Set the border to 1px solid white */
+	margin-bottom: 0px;
+  background-color: #ba86a2;
+    border: 1px solid #ffffff;   /* Border around the combo box */
+    border-radius: 10px;         /* Rounded corners */
+    padding: 6px 10px;           /* Padding around the text */
+    color: white;       
+height:14px;
+border-radius: 8px;        
+  margin-right:50px;</string>
+                        </property>
+                        <property name="text">
+                         <string>Poles</string>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_23">
+                      <item>
+                       <spacer name="horizontalSpacer_15">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                      <item>
+                       <widget class="QCheckBox" name="conjugateCheck">
+                        <property name="cursor">
+                         <cursorShape>PointingHandCursor</cursorShape>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">   font-family: &quot;Arial&quot;;
+    font-weight: 600; /* Semibold */
+    font-size: 11pt; /* Adjust the font size as needed */
+ 	color: rgb(26, 70, 91);
+    border: 1px solid  rgb(26, 70, 91);; /* Set the border to 1px solid white */
+	margin-bottom: 0px;
+  background-color: #ba86a2;
+    border: 1px solid #ffffff;   /* Border around the combo box */
+    border-radius: 10px;         /* Rounded corners */
+    padding: 6px 10px;           /* Padding around the text */
+    color: white;       
+height:14px;
+border-radius: 8px;        
+  margin-right:50px;</string>
+                        </property>
+                        <property name="text">
+                         <string>Conjugate</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <spacer name="horizontalSpacer_16">
+                        <property name="orientation">
+                         <enum>Qt::Horizontal</enum>
+                        </property>
+                        <property name="sizeHint" stdset="0">
+                         <size>
+                          <width>40</width>
+                          <height>20</height>
+                         </size>
+                        </property>
+                       </spacer>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </item>
+                  <item row="6" column="0">
+                   <layout class="QHBoxLayout" name="horizontalLayout_27"/>
+                  </item>
+                  <item row="8" column="0">
+                   <widget class="QGroupBox" name="groupBox_2">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QGroupBox {
+background-color: #321a24;
+}
+background-color: #784B84;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+     border: 1.2px solid white;
+border-style: outset;
+border-radius: 8px;</string>
+                    </property>
+                    <property name="title">
+                     <string>Undo and Redo</string>
+                    </property>
+                    <layout class="QHBoxLayout" name="horizontalLayout_10">
+                     <item>
+                      <layout class="QHBoxLayout" name="horizontalLayout_7">
+                       <item>
+                        <spacer name="horizontalSpacer_13">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>40</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="undo">
+                         <property name="font">
+                          <font>
+                           <family>-apple-system,system-ui,Segoe UI,Roboto,Helvetica Neue,Ubuntu,sans-serif</family>
+                           <weight>75</weight>
+                           <bold>true</bold>
+                          </font>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton{
+appearance: button;
+backface-visibility: hidden;
+  background-color: #ba86a2;
+border-radius: 6px;
+border-width: 0;
+box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
+box-sizing: border-box;
+color: #fff;
+cursor: pointer;
+font-family: -apple-system,system-ui,&quot;Segoe UI&quot;,Roboto,&quot;Helvetica Neue&quot;,Ubuntu,sans-serif;
+font-size: 100%;
+
+line-height: 1.15;
+outline: none;
+overflow: hidden;
+padding: 3 10px;
+position: relative;
+text-align: center;
+text-transform: none;
+transform: translateZ(0);
+transition: all .2s,box-shadow .08s ease-in;
+user-select: none;
+-webkit-user-select: none;
+touch-action: manipulation;
+
+border-style: outset;
+border-radius: 10px;
+}
+QPushButton:hover {
+    background-color: #ab7b96;    /* Slightly lighter blue when hovering */
+}
+
+QPushButton:pressed {
+    background-color: #956b83;    /* Darker blue when pressed */
+}</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="icon">
+                          <iconset>
+                           <normaloff>icons/undo.png</normaloff>icons/undo.png</iconset>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>25</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QPushButton" name="redo">
+                         <property name="font">
+                          <font>
+                           <family>-apple-system,system-ui,Segoe UI,Roboto,Helvetica Neue,Ubuntu,sans-serif</family>
+                           <weight>75</weight>
+                           <bold>true</bold>
+                          </font>
+                         </property>
+                         <property name="cursor">
+                          <cursorShape>PointingHandCursor</cursorShape>
+                         </property>
+                         <property name="toolTip">
+                          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;replay&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">QPushButton{
+appearance: button;
+backface-visibility: hidden;
+  background-color: #ba86a2;
+border-radius: 6px;
+border-width: 0;
+box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
+box-sizing: border-box;
+color: #fff;
+cursor: pointer;
+font-family: -apple-system,system-ui,&quot;Segoe UI&quot;,Roboto,&quot;Helvetica Neue&quot;,Ubuntu,sans-serif;
+font-size: 100%;
+
+line-height: 1.15;
+outline: none;
+overflow: hidden;
+padding: 3 10px;
+position: relative;
+text-align: center;
+text-transform: none;
+transform: translateZ(0);
+transition: all .2s,box-shadow .08s ease-in;
+user-select: none;
+-webkit-user-select: none;
+touch-action: manipulation;
+
+border-style: outset;
+border-radius: 10px;
+}
+QPushButton:hover {
+    background-color: #ab7b96;    /* Slightly lighter blue when hovering */
+}
+
+QPushButton:pressed {
+    background-color: #956b83;    /* Darker blue when pressed */
+}</string>
+                         </property>
+                         <property name="text">
+                          <string/>
+                         </property>
+                         <property name="icon">
+                          <iconset>
+                           <normaloff>icons/redo.png</normaloff>icons/redo.png</iconset>
+                         </property>
+                         <property name="iconSize">
+                          <size>
+                           <width>25</width>
+                           <height>25</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <spacer name="horizontalSpacer_14">
+                         <property name="orientation">
+                          <enum>Qt::Horizontal</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>40</width>
+                           <height>20</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                      </layout>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item row="9" column="0">
+                   <widget class="QPushButton" name="filterRealization">
+                    <property name="minimumSize">
+                     <size>
+                      <width>250</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>200</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                    <property name="cursor">
+                     <cursorShape>PointingHandCursor</cursorShape>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton{
   appearance: button;
   backface-visibility: hidden;
   background-color: #ba86a2;
@@ -1150,26 +1116,11 @@ QPushButton:pressed {
     background-color: #956b83;    /* Darker blue when pressed */
 }
 </string>
-                      </property>
-                      <property name="text">
-                       <string>View filter realization</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <spacer name="horizontalSpacer_18">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                   </layout>
+                    </property>
+                    <property name="text">
+                     <string>View filter realization</string>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </widget>
@@ -1220,43 +1171,6 @@ QGroupBox::title  {
                      <number>0</number>
                     </property>
                     <item>
-                     <widget class="QCheckBox" name="delete_2">
-                      <property name="maximumSize">
-                       <size>
-                        <width>300</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="toolTip">
-                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;delete current pole/zero&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">   font-family: &quot;Arial&quot;;
-    font-weight: 600; /* Semibold */
-    font-size: 11pt; /* Adjust the font size as needed */
- 	color: rgb(26, 70, 91);
-    border: 1px solid  rgb(26, 70, 91);; /* Set the border to 1px solid white */
-	margin-bottom: 0px;
-  background-color: #ba86a2;
-    border: 1px solid #ffffff;   /* Border around the combo box */
-    border-radius: 10px;         /* Rounded corners */
-    padding: 6px 10px;           /* Padding around the text */
-    color: white;       
-height:14px;
-border-radius: 8px;     
-margin-top:10px;   
-margin-right:20px;  
-margin-left:0px; </string>
-                      </property>
-                      <property name="text">
-                       <string>Delete</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
                      <spacer name="horizontalSpacer">
                       <property name="orientation">
                        <enum>Qt::Horizontal</enum>
@@ -1275,18 +1189,20 @@ margin-left:0px; </string>
                    </layout>
                   </item>
                   <item>
-                   <layout class="QHBoxLayout" name="spectrogramLayout_4">
-                    <item>
-                     <widget class="QWidget" name="widget_3" native="true">
-                      <property name="minimumSize">
-                       <size>
-                        <width>0</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
+                   <widget class="PlotWidget" name="z_plane" native="true">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </widget>
@@ -1399,168 +1315,6 @@ QGroupBox::title  {
              </item>
             </layout>
            </item>
-           <item row="0" column="0">
-            <layout class="QHBoxLayout" name="horizontalLayout_19">
-             <item>
-              <layout class="QVBoxLayout" name="verticalLayout_10" stretch="0,0">
-               <property name="spacing">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QLabel" name="modeLabel_2">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Overpass SemiBold</family>
-                   <pointsize>12</pointsize>
-                   <weight>75</weight>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">color:#ffffff;
-margin-top: 20px;
-margin-bottom: 10px;
-border: None;</string>
-                 </property>
-                 <property name="text">
-                  <string>Built in libraries</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QComboBox" name="libraries">
-                 <property name="cursor">
-                  <cursorShape>PointingHandCursor</cursorShape>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QComboBox {
-    font-family: &quot;Arial&quot;;
-    font-weight: 700; /* Semibold */
-    font-size: 10pt; /* Adjust the font size as needed */
- 	color: rgb(26, 70, 91);
-
-
-	background-color: #ba86a2;   /* Background color for the combo box */
-  
-    border-radius: 10px;         /* Rounded corners */
-    padding: 4px 10px;           /* Padding around the text */
-    color: white;               
-}
-
-QComboBox::drop-down {
-color: #95527d;
-}
-QComboBox QAbstractItemView {
-    background-color: #rgb(224, 224, 224);   /* Background color for the list */
-
-    selection-background-color: #a87993; /* Selection color when an item is highlighted */
-
-}</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <widget class="QPushButton" name="save">
-               <property name="minimumSize">
-                <size>
-                 <width>150</width>
-                 <height>40</height>
-                </size>
-               </property>
-               <property name="cursor">
-                <cursorShape>PointingHandCursor</cursorShape>
-               </property>
-               <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;save the designed filter&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QPushButton{
-  appearance: button;
-  backface-visibility: hidden;
-  background-color: #ba86a2;
-  border-radius: 10px;
-  border-width: 0;
-  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
-  box-sizing: border-box;
-font-size:16px;
-      color: white;
-   margin-left:20px;
-     border: none;
-padding-top:5px;
-padding-bottom:5px;
-padding-right:20px;
-padding-left:20px;
-}
-QPushButton:hover {
-    background-color: #ab7b96;    /* Slightly lighter blue when hovering */
-}
-
-QPushButton:pressed {
-    background-color: #956b83;    /* Darker blue when pressed */
-}
-</string>
-               </property>
-               <property name="text">
-                <string>Save</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="load">
-               <property name="minimumSize">
-                <size>
-                 <width>150</width>
-                 <height>40</height>
-                </size>
-               </property>
-               <property name="cursor">
-                <cursorShape>PointingHandCursor</cursorShape>
-               </property>
-               <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;load filter&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QPushButton{
-  appearance: button;
-  backface-visibility: hidden;
-  background-color: #ba86a2;
-  border-radius: 10px;
-  border-width: 0;
-  box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset,rgba(50, 50, 93, .1) 0 2px 5px 0,rgba(0, 0, 0, .07) 0 1px 1px 0;
-  box-sizing: border-box;
-font-size:16px;
-      color: white;
-   
-     border: none;
-padding-top:5px;
-padding-bottom:5px;
-padding-right:20px;
-padding-left:20px;
-}
-QPushButton:hover {
-    background-color: #ab7b96;    /* Slightly lighter blue when hovering */
-}
-
-QPushButton:pressed {
-    background-color: #956b83;    /* Darker blue when pressed */
-}
-</string>
-               </property>
-               <property name="text">
-                <string>Load</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
           </layout>
          </widget>
         </item>
@@ -1624,15 +1378,6 @@ QPushButton:pressed {
             </color>
            </brush>
           </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
          </active>
          <inactive>
           <colorrole role="WindowText">
@@ -1689,15 +1434,6 @@ QPushButton:pressed {
             </color>
            </brush>
           </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
          </inactive>
          <disabled>
           <colorrole role="WindowText">
@@ -1751,15 +1487,6 @@ QPushButton:pressed {
              <red>20</red>
              <green>10</green>
              <blue>14</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
             </color>
            </brush>
           </colorrole>
@@ -2207,15 +1934,6 @@ QPushButton:pressed {
             </color>
            </brush>
           </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
          </active>
          <inactive>
           <colorrole role="WindowText">
@@ -2269,15 +1987,6 @@ QPushButton:pressed {
              <red>20</red>
              <green>10</green>
              <blue>14</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
             </color>
            </brush>
           </colorrole>
@@ -2337,15 +2046,6 @@ QPushButton:pressed {
             </color>
            </brush>
           </colorrole>
-          <colorrole role="PlaceholderText">
-           <brush brushstyle="NoBrush">
-            <color alpha="128">
-             <red>255</red>
-             <green>255</green>
-             <blue>255</blue>
-            </color>
-           </brush>
-          </colorrole>
          </disabled>
         </palette>
        </property>
@@ -2392,11 +2092,11 @@ QGroupBox::title  {
 }</string>
              </property>
              <property name="title">
-              <string>Real Signal</string>
+              <string>Original Signal</string>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_7">
               <item>
-               <widget class="PlotWidget" name="real_signal" native="true">
+               <widget class="PlotWidget" name="original_signal" native="true">
                 <property name="styleSheet">
                  <string notr="true">margin-top:10px;</string>
                 </property>
@@ -2827,8 +2527,8 @@ border-radius: 15px;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>863</width>
-     <height>22</height>
+     <width>858</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>
