@@ -1824,7 +1824,7 @@ QGroupBox::title  {
                  <string notr="true">background-color: rgb(52, 25, 36);</string>
                 </property>
                 <property name="placeholderText">
-                 <string>enter arbitary 'a'</string>
+                 <string>enter arbitary 'a' or complex values ' eg. 0.5+0.5j'</string>
                 </property>
                </widget>
               </item>
