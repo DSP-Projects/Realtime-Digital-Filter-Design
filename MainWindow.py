@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow,QComboBox, QCheckBox, QRadioButton, QApplication, QPushButton, QLabel, QSlider,QProgressBar, QWidget
+from PyQt5.QtWidgets import QMainWindow,QComboBox, QCheckBox, QRadioButton, QApplication, QPushButton, QLabel, QSlider,QProgressBar, QWidget,QLineEdit
 from PyQt5.QtWidgets import QMainWindow,QComboBox, QCheckBox, QRadioButton, QApplication, QPushButton, QLabel, QSlider,QProgressBar,QGraphicsView,QGraphicsScene
 from PyQt5.QtGui import QIcon
 from pyqtgraph import PlotWidget
@@ -14,6 +14,10 @@ from FilterResponse import FilterResponse
 from scipy import signal
 from RealTimeSignal import RealTimeFilter, RealTimePlot
 from Load import Load
+import numpy as np
+import pyqtgraph as pg
+from all_pass_filters import all_pass
+
 import pandas as pd
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -40,19 +44,49 @@ class MainWindow(QMainWindow):
             "Bessel HPF": {"order": 4, "type": "bessel", "btype": "high"}
         }
 
+
+
+
+        self.allpass_combo = self.findChild(QComboBox,"filter_combobox")
+        self.allpass_combo.addItems(["Select All-Pass", "Moderate Phase Shift (a=0.5)", "Strong Phase Shift (a=0.8)",
+                                     "Light Phase Shift (a=0.3)", "Inverted Phase Shift (a=-0.9)", "Very Light Phase Shift (a=0.1)", "Moderate Inverted Phase Shift (a=-0.7)"," Subtle Phase Shift (a=0.2)"])
+        #self.allpass_combo.currentIndexChanged.connect(self.update_phase_response)
+        self.phase_plotof_all = self.findChild(PlotWidget, "phaseResponse")
+
+        self.allpass_zeros = []  # List of zero sets
+        self.allpass_poles = [] 
+        self.allpass_combination = [] 
+        self.custom_a_input =self.findChild( QLineEdit,"customFilterText")
+
+        self.apply_allpass_button = self.findChild(QPushButton,"applyFilter")
+        #self.apply_allpass_button.clicked.connect(lambda: self.update_phase_response(from_custom=False))
+
+        #self.remove_last_allpass_button = QPushButton("deleteFilter")
+        self.addcustomFilter=self.findChild( QPushButton,"addCustomFilter")
+        self.addcustomFilter.clicked.connect(lambda: self.update_phase_response(from_custom=True))
+
+        if self.apply_allpass_button:
+            self.apply_allpass_button.clicked.connect(self.update_phase_response)
+        self.remove_last_allpass_button = self.findChild(QPushButton,"deleteFilter")
+        if self.remove_last_allpass_button:
+            self.remove_last_allpass_button.clicked.connect(self.remove_last_allpass)
+
         self.combo_library=self.findChild(QComboBox,"libraries")
         self.setup_combo_box()
         self.combo_library.currentIndexChanged.connect(self.load_filter_with_allpass)
+        self.allpasscorrect = self.findChild(PlotWidget, "correctedPhase")
 
         #magnitude plot
         self.magnitude_plot = self.findChild(PlotWidget, "Magnitude_graph")
         #phase plot
         self.phase_plot = self.findChild(PlotWidget, "Phase_graph")
         #filter_response instance
-        self.filter_response= FilterResponse(self.magnitude_plot, self.phase_plot)
+        self.filter_response= FilterResponse(self.magnitude_plot, self.phase_plot,self.allpasscorrect)
         self.real_time_filter=RealTimeFilter()
 
         #z-plane
+        self.z_plane_allpass_wid = self.findChild(QWidget, "zplane")
+        self.z_plane_allpass=all_pass(self.z_plane_allpass_wid)
         self.z_plane_widget = self.findChild(QWidget, "widget_3")
         self.zplane= ZPlane(self.z_plane_widget, self.filter_response, self.real_time_filter)
 
@@ -174,18 +208,85 @@ class MainWindow(QMainWindow):
         self.filter_realization_window.show()
     
     #hajer
+    
+
+    def update_phase_response(self, from_custom=False):
+     """Update phase response plot based on the selected all-pass filter."""
+     allpass_dict = {
+        "Moderate Phase Shift  (a=0.5)": 0.5,
+        "Strong Phase Shift (a=0.8)": 0.8,
+        "Light Phase Shift (a=0.3)": 0.3,
+        "Inverted Phase Shift (a=-0.9)": -0.9,
+        "Very Light Phase Shift (a=0.1)": 0.1,
+        "Moderate Inverted Phase Shift (a=-0.7)":- 0.7,
+        "Subtle Phase Shift (a=0.2)" : 0.2
+    }
+     if from_custom:
+         try:
+            custom_a = self.custom_a_input.text().strip() # Get input value
+            a = complex(custom_a)
+            if not (-1 <  a.real  < 1):  # Validate range (-1,1) to avoid instability
+                self.show_message("Please enter a valid 'a' between -1 and 1.")
+                return
+            
+            self.custom_a_input.clear() 
+         except ValueError:
+            self.show_message("Invalid input! Please enter a numeric value.")
+            return
+         
+
+     else:  
+        selected_filter = self.allpass_combo.currentText()
+
+        if selected_filter not in allpass_dict:
+          print("not exist")
+          return  # Ignore invalid selections
+
+        a = allpass_dict[selected_filter]
+     pole = a  
+     zero = 1 / np.conj(a) if a != 0 else 0
+     if np.imag(a) < 0:
+      self.show_message("Selected filter is in the lower half-plane. Ignoring.")
+      return
+
+     self.allpass_zeros.append([zero])
+     print(f"zeros after apply:{self.allpass_zeros}")
+     self.allpass_poles.append([pole])
+     self.z_plane_allpass.plot_z_plane(self.allpass_zeros,self.allpass_poles)
+     self.zplane.append_all_pass_zeros_poles(self.allpass_zeros, self.allpass_poles)
+     self.zplane.plot_z_plane(np.array(self.allpass_zeros), np.array(self.allpass_poles))  
+
+     self.compute_and_plot_frequency_response()   
+    
+    def compute_and_plot_frequency_response(self):
+    # Define all-pass filter transfer function: H(z) = (z - a) / (1 - az)
+     b = np.array([ 1])  # Numerator coefficients
+     a = np.array([1])  # Denominator coefficients
+     for zero, pole in zip(self.allpass_zeros, self.allpass_poles):
+        b = np.convolve(b, np.array([1, -zero[0]]))  # Update numerator
+        a = np.convolve(a, np.array([1, -pole[0]]))  
+    # Compute frequency response
+     w, h = signal.freqz(b, a, worN=8000)
+
+    # Extract phase response (unwrap to avoid jumps)
+     phase_response = np.unwrap(np.angle(h))
+     frequencies, _, phase_rad = FilterResponse.compute_filter_response(b, a)
+    # Clear the previous plot
+     self.phase_plotof_all.clear()
+
+    # Plot new phase response
+     self.phase_plotof_all.plot(w , phase_response,clear=True ,pen=pg.mkPen(color="r", width=2))
+     self.phase_plotof_all.setTitle('Phase Response of All Pass Filter')  # Set the title
+     self.phase_plotof_all.setLabel('left', 'Phase (Radian)')  # Set the y-axis label
+     self.phase_plotof_all.setLabel('bottom', 'Normalized Frequency (rad/sample)')
+    
     def setup_combo_box(self):
      """Initialize the combo box with a placeholder and filter names."""
      self.combo_library.addItem("Select Built-in Library Filters")  # Add placeholder
      self.combo_library.addItems(self.filter_library.keys())  # Add actual filters
      self.combo_library.setCurrentIndex(0)
 
-    def setup_combo_box(self):
-     """Initialize the combo box with a placeholder and filter names."""
-     self.combo_library.addItem("Select Built-in Library Filters")  # Add placeholder
-     self.combo_library.addItems(self.filter_library.keys())  # Add actual filters
-     self.combo_library.setCurrentIndex(0)
-
+   
     def load_filter_with_allpass(self):
         """Load and apply the filter with all-pass elements."""
         # Get the selected filter from the combo box
@@ -238,11 +339,38 @@ class MainWindow(QMainWindow):
 
         return b,a
     
+    
+    def remove_last_allpass(self):
+         """Remove the last added All-Pass filter."""
+         if not self.allpass_zeros or not self.allpass_poles:
+            print("No all-pass filters to remove.")
+            return
+        
+        # Remove last added filter
+         popped_zero = self.allpass_zeros.pop() if self.allpass_zeros else None
+         popped_pole = self.allpass_poles.pop() if self.allpass_poles else None
+
+# Send the popped elements to the remove_all_pass_zeros_poles method
+         self.zplane.remove_all_pass_zeros_poles(popped_zero, popped_pole)
+         print(self.allpass_poles)
+         self.z_plane_allpass.plot_z_plane(self.allpass_zeros,self.allpass_poles)
+
+         self.zplane.plot_z_plane(np.array(self.allpass_zeros), np.array(self.allpass_poles))  
+
+         self.compute_and_plot_frequency_response()
+
+                
+       
 
 
+
+
+
+    
+   
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
     # window.showMaximized()
-    sys.exit(app.exec_())         
+    sys.exit(app.exec_())       

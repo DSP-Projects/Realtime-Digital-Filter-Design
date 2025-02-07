@@ -12,6 +12,9 @@ class ZPlane(QWidget):
         # Zeros and Poles
         self.zeros = np.array([], dtype=complex)
         self.poles = np.array([], dtype=complex)
+        self.all_pass_zeros = np.array([], dtype=complex)
+        self.all_pass_poles = np.array([], dtype=complex)
+        self.zplane_widget=zplane_widget
         self.filter_response= filter_respone
         self.real_time_filter =real_time_filter
         self.pole_mode= False 
@@ -62,7 +65,14 @@ class ZPlane(QWidget):
             self.plot_filter_response()
 
     def plot_z_plane(self, zeros=None, poles=None):
+
         self.ax.clear()  # Clear any previous plot
+
+        zeros_from_allpass=zeros
+        poles_from_allpass=poles
+        print (f"zeros in  originalzplane:{zeros_from_allpass} ")
+        print(f"originallist:{self.zeros}")
+
         # Plot the unit circle
         theta = np.linspace(0, 2 * np.pi, 100)
         self.ax.plot(np.cos(theta), np.sin(theta), linestyle='--', color='gray', label='Unit Circle')
@@ -80,15 +90,45 @@ class ZPlane(QWidget):
             self.ax.scatter(self.zeros.real, self.zeros.imag, s=50, color='red', label='Zeros', marker='o')
         if self.poles.size > 0:
             self.ax.scatter(self.poles.real, self.poles.imag, s=50, color='blue', label='Poles', marker='x')
-        self.plot_filter_response()
 
-        if poles and zeros:
-            self.ax.scatter(zeros.real, zeros.imag, s=50, color='black', label='Zeros', marker='o')
-            self.ax.scatter(poles.real, poles.imag, s=50, color='black', label='Poles', marker='x')
+        if  zeros_from_allpass is not None and zeros_from_allpass.size > 0: # Use .size to check non-empty array
+         self.ax.scatter(zeros_from_allpass.real, zeros_from_allpass.imag, s=50, color='red', label='Zeros', marker='o')
+        if poles_from_allpass is not None and poles_from_allpass.size > 0:  # Use .size to check non-empty array
+         self.ax.scatter(poles_from_allpass.real, poles_from_allpass.imag, s=50, color='blue', label='Poles', marker='x')
+
+        self.plot_filter_response()
 
         # Refresh the canvas
         self.canvas.draw()
+
+
+
+
+
+
+    def append_all_pass_zeros_poles(self, zeros_all_pass, poles_all_pass):
+    # Append the zeros and poles of the all-pass filter
+     self.all_pass_zeros = np.append(self.all_pass_zeros, zeros_all_pass)
+     self.all_pass_poles = np.append(self.all_pass_poles, poles_all_pass)
         
+     self.zeros = np.append(self.zeros, zeros_all_pass)
+     self.poles = np.append(self.poles, poles_all_pass)
+    
+   
+     # Replot Z-plane and frequency response
+     self.plot_z_plane()
+     self.plot_filter_response()  
+
+    def remove_all_pass_zeros_poles(self, zeros_all_pass, poles_all_pass):
+    # Remove the zeros and poles from the lists
+     mask_zeros = np.isin(self.zeros, zeros_all_pass)
+     mask_poles = np.isin(self.poles, poles_all_pass) 
+     self.zeros = np.delete(self.zeros, np.where(mask_zeros)[0])
+     self.poles = np.delete(self.poles, np.where(mask_poles)[0])
+
+# Replot Z-plane and frequency response
+     self.plot_z_plane()
+     self.plot_filter_response()
 
     def toggle_mode_to_zeros(self):
         self.pole_mode= False

@@ -24,7 +24,7 @@ class RealTimeFilter:
         # Add new input
         self.input_buffer[0] = x
 
-        y = np.dot(self.b, self.input_buffer) - np.dot(self.a[1:], self.output_buffer[1:])
+        y = - (np.dot(self.b, self.input_buffer) - np.dot(self.a[1:], self.output_buffer[1:]))
         self.output_buffer[0] = y
         return y
     def set_coef(self,b,a):
@@ -122,7 +122,7 @@ class RealTimePlot(QWidget):
 
 
     def eventFilter(self, source, event):
-        if source == self.graphics_view.viewport() and event.type() == event.MouseMove:
+        if source is not None and source  == self.graphics_view.viewport() and event.type() == event.MouseMove:
             self.mouse_move_event(event)
         return super().eventFilter(source, event)
 
