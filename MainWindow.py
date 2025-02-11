@@ -4,6 +4,7 @@ from PyQt5.QtGui import QIcon
 from pyqtgraph import PlotWidget
 import sys
 import os
+from PyQt5.QtCore import Qt
 from PyQt5.uic import loadUi
 from ZPlane import ZPlane
 from RealTimeSignal import RealTimeFilter, RealTimePlot
@@ -48,8 +49,8 @@ class MainWindow(QMainWindow):
 
 
         self.allpass_combo = self.findChild(QComboBox,"filter_combobox")
-        self.allpass_combo.addItems(["Select All-Pass", "Moderate Phase Shift (a=0.5)", "Strong Phase Shift (a=0.8)",
-                                     "Light Phase Shift (a=0.3)", "Inverted Phase Shift (a=-0.9)", "Very Light Phase Shift (a=0.1)", "Moderate Inverted Phase Shift (a=-0.7)"," Subtle Phase Shift (a=0.2)"])
+        self.allpass_combo.addItems(["Select All-Pass", "Moderate Phase Shift  (a=0.5)", "Strong Phase Shift (a=0.8)",
+                                     "Light Phase Shift (a=0.3)", "Inverted Phase Shift (a=-0.9)", "Very Light Phase Shift (a=0.1)", "Moderate Inverted Phase Shift (a=-0.7)","Subtle Phase Shift (a=0.2)"])
         #self.allpass_combo.currentIndexChanged.connect(self.update_phase_response)
         self.phase_plotof_all = self.findChild(PlotWidget, "phaseResponse")
 
@@ -63,13 +64,13 @@ class MainWindow(QMainWindow):
 
         #self.remove_last_allpass_button = QPushButton("deleteFilter")
         self.addcustomFilter=self.findChild( QPushButton,"addCustomFilter")
-        self.addcustomFilter.clicked.connect(lambda: self.update_phase_response(from_custom=True))
+        self.addcustomFilter.clicked.connect(lambda: self.update_phase_response(from_custom=True) if self.allpasscheck.isChecked() else None)
 
         if self.apply_allpass_button:
-            self.apply_allpass_button.clicked.connect(self.update_phase_response)
+            self.apply_allpass_button.clicked.connect(lambda: self.update_phase_response() if self.allpasscheck.isChecked() else None)
         self.remove_last_allpass_button = self.findChild(QPushButton,"deleteFilter")
         if self.remove_last_allpass_button:
-            self.remove_last_allpass_button.clicked.connect(self.remove_last_allpass)
+            self.remove_last_allpass_button.clicked.connect(lambda: self.remove_last_allpass() if self.allpasscheck.isChecked() else None)
 
         self.combo_library=self.findChild(QComboBox,"libraries")
         self.setup_combo_box()
@@ -83,7 +84,9 @@ class MainWindow(QMainWindow):
         #filter_response instance
         self.filter_response= FilterResponse(self.magnitude_plot, self.phase_plot,self.allpasscorrect)
         self.real_time_filter=RealTimeFilter()
-
+        self.allpasscheck = self.findChild(QCheckBox, "allPassCheck")
+        self.saved_allpass_zeros = []
+        self.saved_allpass_poles = []
         #z-plane
         self.z_plane_allpass_wid = self.findChild(QWidget, "zplane")
         self.z_plane_allpass=all_pass(self.z_plane_allpass_wid)
@@ -154,6 +157,7 @@ class MainWindow(QMainWindow):
         self.magnitude_plot = self.findChild(PlotWidget, "Magnitude_graph")
         #phase plot
         self.phase_plot = self.findChild(PlotWidget, "Phase_graph")
+        self.allpasscheck.stateChanged.connect(self.handle_allpass_toggle)
 
 
 
@@ -209,6 +213,43 @@ class MainWindow(QMainWindow):
     
     #hajer
     
+    def handle_allpass_toggle(self, state):
+     """Enable/Disable all-pass filter functionality based on the checkbox state."""
+     if state == Qt.Checked:
+        if hasattr(self, 'saved_allpass_zeros') and hasattr(self, 'saved_allpass_poles'):
+            self.allpass_zeros = self.saved_allpass_zeros.copy()
+            self.allpass_poles = self.saved_allpass_poles.copy()
+
+        
+        self.addcustomFilter.setEnabled(True)
+        self.apply_allpass_button.setEnabled(True)
+        self.remove_last_allpass_button.setEnabled(True)
+        self.z_plane_allpass.plot_z_plane(self.allpass_zeros, self.allpass_poles)
+        self.zplane.plot_z_plane(np.array(self.allpass_zeros), np.array(self.allpass_poles),False)
+        self.compute_and_plot_frequency_response()
+     else:
+        # Disable buttons and reset all-pass filters when unchecked
+        self.saved_allpass_zeros = self.allpass_zeros.copy()
+        self.saved_allpass_poles = self.allpass_poles.copy()
+        self.addcustomFilter.setEnabled(False)
+        self.apply_allpass_button.setEnabled(False)
+        self.remove_last_allpass_button.setEnabled(False)
+        
+       
+        
+
+        # Clear all-pass filters
+        self.allpass_zeros.clear()
+        self.allpass_poles.clear()
+        print(f"saves zeros :{self.saved_allpass_zeros}")
+        # Update plots and frequency response
+        self.z_plane_allpass.plot_z_plane(self.allpass_zeros, self.allpass_poles)
+        self.zplane.plot_z_plane(np.array(self.saved_allpass_zeros), np.array(self.saved_allpass_poles),True)
+        self.compute_and_plot_frequency_response()
+
+
+
+
 
     def update_phase_response(self, from_custom=False):
      """Update phase response plot based on the selected all-pass filter."""
@@ -225,9 +266,9 @@ class MainWindow(QMainWindow):
          try:
             custom_a = self.custom_a_input.text().strip() # Get input value
             a = complex(custom_a)
-            if not (-1 <  a.real  < 1):  # Validate range (-1,1) to avoid instability
-                self.show_message("Please enter a valid 'a' between -1 and 1.")
-                return
+           # if not (-1 <  a.real  < 1):  # Validate range (-1,1) to avoid instability
+              #  self.show_message("Please enter a valid 'a' between -1 and 1.")
+               # return
             
             self.custom_a_input.clear() 
          except ValueError:
@@ -245,9 +286,9 @@ class MainWindow(QMainWindow):
         a = allpass_dict[selected_filter]
      pole = a  
      zero = 1 / np.conj(a) if a != 0 else 0
-     if np.imag(a) < 0:
-      self.show_message("Selected filter is in the lower half-plane. Ignoring.")
-      return
+     #if np.imag(a) < 0:
+      #self.show_message("Selected filter is in the lower half-plane. Ignoring.")
+     # return
 
      self.allpass_zeros.append([zero])
      print(f"zeros after apply:{self.allpass_zeros}")

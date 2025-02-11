@@ -2182,7 +2182,7 @@ QPushButton:pressed {
         <item row="1" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout_21">
           <item>
-           <widget class="QCheckBox" name="checkBox">
+           <widget class="QCheckBox" name="allPassCheck">
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
