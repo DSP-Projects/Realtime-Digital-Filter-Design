@@ -305,7 +305,7 @@ QTabBar::tab:selected {
 }</string>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="design_tab">
        <property name="palette">
@@ -2100,8 +2100,8 @@ QPushButton:pressed {
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>16777215</width>
-                   <height>16777215</height>
+                   <width>100000</width>
+                   <height>300</height>
                   </size>
                  </property>
                 </widget>

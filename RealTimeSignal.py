@@ -1,4 +1,5 @@
 import sys
+import time
 import numpy as np
 from PyQt5.QtWidgets import (
     QApplication, QVBoxLayout, QHBoxLayout, QWidget, QSlider, QPushButton, QFileDialog, QLabel, QFrame
@@ -10,11 +11,22 @@ from PyQt5.QtGui import QPen
 from PyQt5.QtCore import Qt
 
 class RealTimeFilter:
-    def __init__(self,):
+    def __init__(self):
         self.b = None
         self.a = None
         self.input_buffer = np.zeros(1)
         self.output_buffer = np.zeros(1)
+
+    def set_coef(self, b, a):
+        # Normalize coefficients if necessary
+        if a[0] != 1:
+            a = a / a[0]
+            b = b / a[0]
+        
+        self.b = b
+        self.a = a
+        self.input_buffer = np.zeros(len(self.b))
+        self.output_buffer = np.zeros(len(self.a))
 
     def apply_filter(self, x):
         # Shift buffers
@@ -24,14 +36,10 @@ class RealTimeFilter:
         # Add new input
         self.input_buffer[0] = x
 
-        y = - (np.dot(self.b, self.input_buffer) - np.dot(self.a[1:], self.output_buffer[1:]))
+        # Calculate output using the difference equation
+        y = np.dot(self.b, self.input_buffer) - np.dot(self.a[1:], self.output_buffer[1:])
         self.output_buffer[0] = y
         return y
-    def set_coef(self,b,a):
-        self.b=b
-        self.a=a
-        self.input_buffer = np.zeros(len(self.b))
-        self.output_buffer = np.zeros(len(self.a))
 
 
 
@@ -62,13 +70,14 @@ class RealTimePlot(QWidget):
         # Timer for real-time update
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_plot)
-        self.timer.start(100)  
+        self.timer.start(50)  
 
         self.signal = []  # Original signal (e.g., test signal)
         self.filtered_signal = []  # Filtered signal
         self.counter = 0
 
-        
+        self.last_time = time.time()  # Store the last time the mouse moved
+        self.phase = 0 
 
         self.is_generating_signal = False  # Flag for signal generation
         self.last_mouse_pos = None  # Store the last mouse position for velocity calculation
@@ -128,28 +137,32 @@ class RealTimePlot(QWidget):
 
     def mouse_move_event(self, event):
         if self.mode != "touch":
-            return  # Ignore mouse events in "load" mode
+            return  
 
         pos = self.graphics_view.mapToScene(event.pos())
+        current_time = time.perf_counter()  # Higher precision
+        delta_time = current_time - self.last_time
+        self.last_time = current_time  
 
-        if self.last_pos is not None:
-            velocity = np.sqrt((pos.x() - self.last_pos.x())**2 + (pos.y() - self.last_pos.y())**2)
+        if self.last_pos is not None and delta_time > 0:
+            velocity = np.sqrt((pos.x() - self.last_pos.x())**2 + (pos.y() - self.last_pos.y())**2) / delta_time
 
-            velocity_threshold = 0.5  # Adjust this threshold to your needs
-            if velocity > velocity_threshold:
+            
+            min_freq = 0.5   
+            max_freq = 100   
 
-                signal_value = velocity / 10  
-            else:
-                signal_value = 0  
+            
+            mapped_frequency = np.clip(5 * np.log1p(velocity), min_freq, max_freq)  
 
+          
+            self.phase += 2 * np.pi * mapped_frequency * delta_time  # Update phase
+            signal_value = np.sin(self.phase)  # Generate sine wave
 
-            self.signal.append(signal_value)
+            self.signal.append(signal_value/20)
 
-            # Limit the length of the signal list to avoid overflow
             if len(self.signal) > 5000:
                 self.signal.pop(0)
 
-        # Update the last position for next event
         self.last_pos = pos
 
 

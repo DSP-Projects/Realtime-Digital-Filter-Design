@@ -85,7 +85,7 @@ class FilterDiagram:
         painter.drawText(x_start - 50, y_start + 5, "x[n]")
 
         for i, section in enumerate(self.sos):
-            b, a = section[:3], section[4:]  # Ignore a0 = 1
+            b, a = section[:3], section[3:]  # Ignore a0 = 1
             # Ensure each section gets drawn
             self.draw_direct_form_2(painter, b, a, x_start,counter, key='cascade')
             # Move to the next section position
