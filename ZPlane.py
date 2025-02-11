@@ -64,16 +64,28 @@ class ZPlane(QWidget):
             self.plot_z_plane()
             self.plot_filter_response()
 
-    def plot_z_plane(self, zeros=None, poles=None):
+    def plot_z_plane(self, zeros=None, poles=None,state=False):
 
         self.ax.clear()  # Clear any previous plot
 
-        zeros_from_allpass=zeros
-        poles_from_allpass=poles
+        zeros_from_allpass = np.asarray(zeros).flatten() if zeros is not None else np.array([], dtype=complex)
+        poles_from_allpass = np.asarray(poles).flatten() if poles is not None else np.array([], dtype=complex) 
+       # poles_from_allpass = poles 
         print (f"zeros in  originalzplane:{zeros_from_allpass} ")
-        print(f"originallist:{self.zeros}")
+       
+        if state:
+          mask_zeros = np.isin(self.zeros, zeros_from_allpass)
+          mask_poles = np.isin(self.poles, poles_from_allpass) 
+          self.zeros = np.delete(self.zeros, np.where(mask_zeros)[0])
+          self.poles = np.delete(self.poles, np.where(mask_poles)[0])
+
+        else:
+            self.zeros = np.unique(np.concatenate((self.zeros, zeros_from_allpass))) if zeros_from_allpass.size > 0 else self.zeros
+            self.poles = np.unique(np.concatenate((self.poles, poles_from_allpass))) if poles_from_allpass.size > 0 else self.poles
 
         # Plot the unit circle
+        print(f"originallist:{self.zeros}")
+        
         theta = np.linspace(0, 2 * np.pi, 100)
         self.ax.plot(np.cos(theta), np.sin(theta), linestyle='--', color='gray', label='Unit Circle')
         # Add labels and grid
@@ -88,15 +100,16 @@ class ZPlane(QWidget):
         #self.ax.set_ylim(-15, 15)
 
         if self.zeros.size > 0:
+            print(f"zeros that draw :{self.zeros}")
             self.ax.scatter(self.zeros.real, self.zeros.imag, s=50, color='red', label='Zeros', marker='o')
         if self.poles.size > 0:
             self.ax.scatter(self.poles.real, self.poles.imag, s=50, color='blue', label='Poles', marker='x')
 
-        if  zeros_from_allpass is not None and zeros_from_allpass.size > 0: # Use .size to check non-empty array
+        if  zeros_from_allpass is not None and zeros_from_allpass.size > 0 and not state : # Use .size to check non-empty array
          self.ax.scatter(zeros_from_allpass.real, zeros_from_allpass.imag, s=50, color='red', label='Zeros', marker='o')
-        if poles_from_allpass is not None and poles_from_allpass.size > 0:  # Use .size to check non-empty array
+        if poles_from_allpass is not None and poles_from_allpass.size > 0 and not state :  # Use .size to check non-empty array
          self.ax.scatter(poles_from_allpass.real, poles_from_allpass.imag, s=50, color='blue', label='Poles', marker='x')
-
+        #self.plot_z_plane()
         self.plot_filter_response()
 
         #colors changes
