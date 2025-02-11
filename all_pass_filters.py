@@ -37,7 +37,8 @@ class all_pass(QWidget):
         self.ax.set_title('Zeros and Poles in the Z-Plane')
         self.ax.set_xlabel('Real Part')
         self.ax.set_ylabel('Imaginary Part')
-        self.ax.set_xlim(-2,2)
+        self.ax.set_xlim(-11, 11)
+        self.ax.set_ylim(-5, 5)
         zeros = np.array(zeros)if zeros is not None else np.array([])
         poles = np.array(poles)if poles is not None else np.array([])
         print(f"zeros :{zeros}")
@@ -47,6 +48,22 @@ class all_pass(QWidget):
          self.ax.scatter(zeros.real, zeros.imag, s=50, color='red', label='Zeros', marker='o')
         if poles is not None and poles.size > 0:  # Use .size to check non-empty array
          self.ax.scatter(poles.real, poles.imag, s=50, color='blue', label='Poles', marker='x')
+
+         #color changes
+        self.ax.set_facecolor('black')  # Set the plot background to black
+        self.figure.patch.set_facecolor('black')  # Set the figure background to black
+        self.ax.grid(color='white', linestyle='--', linewidth=0.5)  # Change grid color
+        self.ax.spines['bottom'].set_color('white')  
+        self.ax.spines['top'].set_color('white')  
+        self.ax.spines['left'].set_color('white')  
+        self.ax.spines['right'].set_color('white')  
+        self.ax.xaxis.label.set_color('white')  
+        self.ax.yaxis.label.set_color('white')  
+        self.ax.title.set_color('white')  
+        self.ax.tick_params(colors='white')  # Change tick color
+        self.ax.axhline(0, color='white', linewidth=0.5)
+        self.ax.axvline(0, color='white', linewidth=0.5)
+        self.ax.plot(np.cos(theta), np.sin(theta), linestyle='--', color='white', label='Unit Circle')
 
 
 
