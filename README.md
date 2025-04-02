@@ -55,7 +55,7 @@ This desktop application allows users to design custom digital filters through z
 - Frequency response graphs.
 - Navigation bar for built-in filter library.
   
-![Window 1](demo/"window 1.jpg")
+![Window 1](demo/"window 1.JPG")
 
 ### **Window 2: Real-Time Signal Processing**
 - Load an input signal from a file or generate using mouse movement.
