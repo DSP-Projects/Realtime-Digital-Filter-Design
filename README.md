@@ -55,18 +55,27 @@ This desktop application allows users to design custom digital filters through z
 - Frequency response graphs.
 - Navigation bar for built-in filter library.
   
-![Window 1](demo/"window 1.JPG")
+<img src="demo/window 1.JPG" alt="Window 1" width="600">
 
 ### **Window 2: Real-Time Signal Processing**
 - Load an input signal from a file or generate using mouse movement.
 - Graphs for raw and filtered signals.
 - Speed control for real-time processing.
- ![Window 2](demo/window_2.JPG)
+- 
+<img src="demo/window 2.JPG" alt="Window 2" width="600">
 
 ### **Window 3: Phase Correction with All-Pass Filters**
 - Library of all-pass filters.
 - Custom all-pass filter design.
 - Visualization and management tools for phase correction.
 
-   ![Window 3](demo/window_3.JPG)
+<img src="demo/window 3.JPG" alt="Window 3" width="600">
 
+### **Window 4 : Filter Realization **
+- Shows filter in Direct form || and cascade form
+- Can export them as images
+- Generate C code for the filter
+
+<img src="demo/window 4.JPG" alt="Window 4" width="600">
+
+  
