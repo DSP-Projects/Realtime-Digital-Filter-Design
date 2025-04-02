@@ -54,14 +54,19 @@ This desktop application allows users to design custom digital filters through z
 - Z-plane plot for zero-pole placement.
 - Frequency response graphs.
 - Navigation bar for built-in filter library.
+  
+![Window 1](demo/window_1.JPG)
 
 ### **Window 2: Real-Time Signal Processing**
 - Load an input signal from a file or generate using mouse movement.
 - Graphs for raw and filtered signals.
 - Speed control for real-time processing.
+ ![Window 2](demo/window_2.JPG)
 
 ### **Window 3: Phase Correction with All-Pass Filters**
 - Library of all-pass filters.
 - Custom all-pass filter design.
 - Visualization and management tools for phase correction.
+
+   ![Window 3](demo/window_3.JPG)
 
