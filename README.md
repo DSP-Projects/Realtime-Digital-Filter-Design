@@ -71,7 +71,7 @@ This desktop application allows users to design custom digital filters through z
 
 <img src="demo/window 3.JPG" alt="Window 3" width="600">
 
-### **Window 4 : Filter Realization **
+### **Window 4 : Filter Realization**
 - Shows filter in Direct form || and cascade form
 - Can export them as images
 - Generate C code for the filter
